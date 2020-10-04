@@ -1,12 +1,13 @@
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
-  purge: [],
   theme: {
-    extend: {},
-  },
-  variants: {},
-  plugins: [],
+    extend: {
+
+    
+    colors: { rojo: "#EE2056",
+            negro: "#211F2D",
+            blanco: "#FFFDFD",
+          },
+          
+  }
+}
 }
