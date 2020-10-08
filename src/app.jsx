@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Navbar from './components/Navbar';
-import Home from './components/Home';
-import Productos from './components/Producto';
-import ServicioTecnico from './components/ServicioTecnico';
-import Carrito from './components/Carrito';
-import Login from './components/Login';
+import Home from './pages/Home';
+import Productos from './pages/Producto';
+import ServicioTecnico from './pages/ServicioTecnico';
+import Carrito from './pages/Carrito';
+import Login from './pages/Login';
+import Registro from './pages/Registro';
 
 function App() {
     return (
@@ -28,6 +29,9 @@ function App() {
                 </Route>
                 <Route path="/login">
                     <Login/>
+                </Route>
+                <Route path="/registro">
+                    <Registro/>
                 </Route>
             </Switch>
             </div>
