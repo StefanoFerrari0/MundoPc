@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import MainTitle from '../components/MainTitle'
 import Subtitle from '../components/Subtitle'
-import Input from '../components/Inputs'
 import Label from '../components/Label'
+import Input from '../components/Inputs'
 import Image from '../images/Login.jpeg'
-
 
 class Login extends Component {
     constructor() {
@@ -17,7 +17,7 @@ class Login extends Component {
       this.state = {
         email: "",
         password: "",
-        error: null
+        error: null,
       };
     }
   
@@ -37,7 +37,7 @@ class Login extends Component {
             <h4 className="font-medium text-gray-700 text-center pt-8 col-span-3">¿No tenes una cuenta? <Link to="/registro" className="text-rojo hover:font-bold hover:text-red-600">Registrate</Link></h4>
             <Link to="/recuperar-cuenta" className="font-medium pt-3 pb-5 text-rojo text-center hover:font-bold hover:text-red-600 col-span-3">¿Olvidaste tu contraseña?</Link>
             </div>
-            <div className="bg-content bg-center w-full h-full" style={{ backgroundImage: "url("+Image+")" }}></div>
+            <div className="bg-content bg-center w-full h-full min-h-full" style={{ backgroundImage: "url("+Image+")" }}></div>
         </section>
     )
     }
@@ -55,12 +55,16 @@ class Login extends Component {
       password: "",
       error: null
     });
-  }
+    }
 
   handleSubmit(e) {
     e.preventDefault();
     
-    //Acá va lo que conecta al back
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
   }
 
 }

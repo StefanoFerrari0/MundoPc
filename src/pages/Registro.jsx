@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Image from '../images/Registro.jpg'
 import MainTitle from '../components/MainTitle'
 import Subtitle from '../components/Subtitle'
@@ -66,8 +67,14 @@ class Registro extends Component {
 
     handleSubmit(e) {
     e.preventDefault();
-    
-    //Acá va lo que conecta al back
+
+    const user = {
+      name: this.state.name,
+      surname: this.state.surname,
+      email: this.state.email,
+      password: this.state.password
+    };
+
   }
 }
 
