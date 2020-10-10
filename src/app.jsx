@@ -1,12 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Productos from './pages/Producto';
-import ServicioTecnico from './pages/ServicioTecnico';
-import Carrito from './pages/Carrito';
-import Login from './pages/Login';
-import Registro from './pages/Registro';
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Productos from './pages/Producto'
+import ServicioTecnico from './pages/ServicioTecnico'
+import ConsultaST from './pages/ConsultaST'
+import Carrito from './pages/Carrito'
+import Login from './pages/Login'
+import Registro from './pages/Registro'
+import RecuperarCuenta from './pages/RecuperarCuenta'
+import Error from './pages/Error'
 
 function App() {
     return (
@@ -15,24 +18,16 @@ function App() {
                 <Navbar/>
             <hr/>
             <Switch>
-                <Route path="/" exact>
-                    <Home/>
-                </Route>
-                <Route path="/productos">
-                    <Productos/>
-                </Route>
-                <Route path="/servicio-tecnico">
-                    <ServicioTecnico/>
-                </Route>
-                <Route path="/carrito">
-                    <Carrito/>
-                </Route>
-                <Route path="/login">
-                    <Login/>
-                </Route>
-                <Route path="/registro">
-                    <Registro/>
-                </Route>
+                <Route exact path="/" component={Home}/>
+                <Route exact path="/productos" component={Productos}/>
+                <Route exact path="/servicio-tecnico" component={ServicioTecnico}/>
+                <Route exact path="/servicio-tecnico/:code" component={ConsultaST}/>
+
+                <Route exact path="/carrito" component={Carrito}/>
+                <Route exact path="/login" component={Login}/>
+                <Route exact path="/registro" component={Registro}/>
+                <Route exact path="/recuperar-cuenta" component={RecuperarCuenta}/>
+                <Route component={Error}/>
             </Switch>
             </div>
         </Router>
