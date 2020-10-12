@@ -24,7 +24,7 @@ export default class ConsultaST extends Component {
         <div className="bg-white shadow overflow-hidden pt-20 pl-10 sm:rounded-lg">
             <div>
                 <dl>
-                <MainTitle class="col-span-" text="Consulta."/>
+                <MainTitle class="" text="Consulta."/>
                 <TableRow text1="Código:" text2="420666"/>
                 <TableRow text1="Dispositivo:" text2="Playstation 4 Slim"/>
                 <TableRow text1="Motivo reparación:" text2="Dejó de prender de la nada, se prende una luz roja. Al prenderla dura 5 seg prendida y se apaga automaticamente."/>
