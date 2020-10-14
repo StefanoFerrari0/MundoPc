@@ -13,7 +13,6 @@ export default class ConsultaST extends Component {
     }
   
     componentDidMount() {
-      var code = this.props.code;
   
       //aca se busca en la base de datos el codigo y se rellena el props consulta
     }

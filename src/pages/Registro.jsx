@@ -6,7 +6,7 @@ import Subtitle from '../components/Subtitle'
 import Input from '../components/Inputs'
 import Label from '../components/Label'
 
-class Registro extends Component {
+export default class Registro extends Component {
     constructor() {
       super();
 
@@ -18,7 +18,6 @@ class Registro extends Component {
         surname: "",
         email:"",
         password: "",
-        password2: "",
         error: null
       };
     }
@@ -30,7 +29,7 @@ class Registro extends Component {
             <div className="grid grid-cols-4 pt-20 pl-16">
              <MainTitle class="col-span-4" text="Registrate."/>
              <Subtitle class="col-span-3" text="Rellena los campos con tus datos y sé parte de nuestra familia."/>
-                <form className="grid grid-cols-4 col-span-3 pt-10 " onSubmit={this.handleSubmit}>
+                <form className="grid grid-cols-4 col-span-3 pt-10" onSubmit={this.handleSubmit}>
                     <Label class="col-span-2" name="name" text="Nombre"/>
                     <Label class="col-span-2" name="surname" text="Apellido"/>
                         <Input name="name" type="text" value={this.state.name}  onChange={this.handleChange} class="pl-5 col-span-2 mr-8"/>
@@ -77,5 +76,3 @@ class Registro extends Component {
 
   }
 }
-
-export default Registro;
