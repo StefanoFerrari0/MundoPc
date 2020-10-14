@@ -5,7 +5,7 @@ import Label from '../components/Label'
 import Input from '../components/Inputs'
 import Image from '../images/ServicioTecnico.jpg'
 
-class ServicioTecnico extends Component {
+export default class ServicioTecnico extends Component {
     constructor() {
       super();
       
@@ -54,5 +54,3 @@ class ServicioTecnico extends Component {
     //Acá va lo que conecta al back
   }
 }
-
-export default ServicioTecnico;
