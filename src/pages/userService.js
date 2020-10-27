@@ -27,7 +27,7 @@ async function login(u, p) {
                 localStorage.setItem('user', JSON.stringify(user));
                 
             }
-            console.log(user.data)            
+                     
             return user.data;   
         });        
     }catch (e){

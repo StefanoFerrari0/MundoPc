@@ -49,7 +49,7 @@ class Login extends Component {
     userService.login(email, password)
         .then(
             user => {
-              console.log(JSON.parse(user));
+              //console.log(user);
                 //const { from } = this.props.location.state || { from: { pathname: "/" } };
                 //this.props.history.push(from);
             },
