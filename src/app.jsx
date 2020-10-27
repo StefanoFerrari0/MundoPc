@@ -10,6 +10,9 @@ import Carrito from './pages/Carrito'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import RecuperarCuenta from './pages/RecuperarCuenta'
+import NewProduct from './pages/Admin/NewProduct'
+import NewReport from './pages/Admin/NewReport'
+
 import Error from './pages/Error'
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/registro" component={Registro}/>
                 <Route exact path="/recuperar-cuenta" component={RecuperarCuenta}/>
+                <Route exact path="/admin/newproduct" component={NewProduct}/>
+                <Route exact path="/admin/newreport" component={NewReport}/>
+
                 <Route component={Error}/>
             </Switch>
         </Router>
