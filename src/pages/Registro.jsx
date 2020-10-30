@@ -62,8 +62,8 @@ export default class Registro extends Component {
                 <form className="grid grid-cols-4 col-span-3 pt-10" onSubmit={this.handleSubmit}>
                     <Label class="col-span-2" name="name" text="Nombre"/>
                     <Label class="col-span-2" name="surname" text="Apellido"/>
-                        <Input name="name" type="text" value={this.state.name} onChange={this.handleChange} class="pl-5 col-span-2 mr-8"/>
-                        <Input name="surname" type="text" value={this.state.surname} onChange={this.handleChange}  class="pl-5 col-span-2"/>
+                        <Input name="name" type="text" value={this.state.firstname} onChange={this.handleChange} class="pl-5 col-span-2 mr-8"/>
+                        <Input name="surname" type="text" value={this.state.lastname} onChange={this.handleChange}  class="pl-5 col-span-2"/>
                     <Label class="pt-5 col-span-4" name="email" text="Correo electrónico"/>
                         <Input name="email" type="email" value={this.state.email} onChange={this.handleChange} placeholder="ej: mundopc@email.com" class="pl-5 col-span-4"/>
                     <Label class="pt-5 col-span-4" name="password" text="Contraseña"/>
