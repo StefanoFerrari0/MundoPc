@@ -20,7 +20,7 @@ export default class ServicioTecnico extends Component {
   
     render() {
       return (
-        <section className="grid grid-cols-2 grid-flow-col ml-20">
+        <section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 ml-20">
             <div className="grid grid-cols-4 pt-20">
             <MainTitle class="col-span-4" text="Servicio técnico."/>
              <Subtitle class="col-span-3" text="Rellena el campo con el código que aparece en tu factura para consultar el estado de tu dispositivo."/>
