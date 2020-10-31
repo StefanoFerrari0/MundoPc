@@ -2,6 +2,7 @@ import React, { Component }from 'react'
 import MainTitle from '../../components/MainTitle'
 import Label from '../../components/Label'
 import Input from '../../components/Inputs'
+import {post} from '../../services/productService'
 
 export default class NewProduct extends Component{
     constructor(props) {
@@ -12,16 +13,18 @@ export default class NewProduct extends Component{
         this.uploadImage = this.uploadImage.bind(this);
 
         this.state = {
-          code: 0,
-          stock: 0,
-          name: "",
+          code: '',
           description: '',
-          img: '',
-          price: 0,
-          category: '',
-          error: null
+          price:0,
+          stock:0,
+          img:'',
+          image:'',
+          submitted: false,
+          loadind: false,
+          error: '',
+          category: ''
         };
-      }
+    }
 
     render(){
       let {img} = this.state;
@@ -47,7 +50,7 @@ export default class NewProduct extends Component{
                         <textarea name="description" rows="8" cols="50" value={this.state.description} onChange={this.handleChange} className="appearance-none py-2 px-4 rounded-lg border border-gray-600 placeholder-gray-500 text-gray-900 font-regular focus:outline-none focus:border-rojo pl-5 col-span-4 mt-2"></textarea>
                     <Label class="col-span-4 pt-5" name="img" text="Imagen"/>
                     {$img}
-                      <input className="pl-5 col-span-2 my-auto" type="file" name="img" onChange={this.uploadImage}/>
+                      <input className="pl-5 col-span-2 my-auto" type="file" name="img" accept=".jpeg, .png, .jpg" onChange={this.uploadImage}/>
                     <Label class="col-span-2 pt-5" name="price" text="Precio"/>
                     <Label class="col-span-2 pt-5 mx-5" name="category" text="Categoria"/>
                         <Input class="col-span-2 mt-2" name="price" type="number" value={this.state.price} onChange={this.handleChange}/>
@@ -62,20 +65,64 @@ export default class NewProduct extends Component{
         )
     }
 
-    handleChange = (e) => {
-      const state = this.state
-      state[e.target.name] = e.target.value;
-      this.setState(state);
+    handleChange = (event) => {
+      if (event.target.name === "code")
+      {
+        this.setState({[event.target.name]: event.target.value});
+        return;
+      }
+
+      const value = event.target.type === "number" ? 
+        Number(event.target.value) : 
+        event.target.value;
+
+      this.setState({[event.target.name]: value});
+      console.log(this.state);
     }   
     
     handleSubmit(e) {
       e.preventDefault();
+      this.setState({ submitted: true });
 
+        // stop here if form is invalid
+        if (!(this.state.code && this.state.description)) {
+            return;
+        }
+
+        this.setState({ loading: true }); 
+
+        const data = {
+            code: this.state.code,
+            description: this.state.description,
+            saleprice: this.state.price,
+            stock: this.state.stock,
+            image: this.state.image
+        }  
+        console.log(data);
+        post(data).then(res=>
+        {    
+            const { from } = this.props.location.state || { from: { pathname: "/" } };
+            this.props.history.push(from);
+        });
     }    
 
     uploadImage(e) {
-      this.setState({
-        img: URL.createObjectURL(e.target.files[0])
-      })
-    }
+      //e.preventDefault();
+
+      let file = e.target.files[0];
+      if (file){
+        this.setState({img: URL.createObjectURL(file)});
+
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
+          let binaryString = e.target.result;
+          this.setState({
+            image: btoa(binaryString)  
+          });
+        }
+        reader.readAsDataURL(file);
+      }
+    }  
+
+    
 }
