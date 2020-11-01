@@ -25,7 +25,8 @@ export default class Home extends Component {
       };
     }
   
-    render() {    
+    render() { 
+        const {name} = this.state;
       return (
         <div>
             <section className="relative py-8 px-4">
@@ -55,7 +56,7 @@ export default class Home extends Component {
                     <form className="grid grid-cols-4 xs:col-span-2 sm:col-span-2 col-span-3 pt-10" onSubmit={this.handleSubmit}>
                     <Label class="col-span-2" name="name" text="Nombre"/>
                     <Label class="col-span-2" name="telephone" text="Teléfono (opcional)"/>
-                            <Input name="name" type="text" value={this.state.name} onChange={this.handleChange} class="col-span-2 pl-5 mr-8 sm:pl-2 sm:mr-2"/>
+                            <Input name="name" type="text" value={name} onChange={this.handleChange} class="col-span-2 pl-5 mr-8 sm:pl-2 sm:mr-2"/>
                             <Input name="telephone" type="text" value={this.state.telephone} onChange={this.handleChange}  class="col-span-2 pl-5"/>
                         <Label class="pt-5 col-span-4" name="email" text="Correo electrónico"/>
                             <Input name="email" type="email" value={this.state.email} onChange={this.handleChange} placeholder="ej: mundopc@email.com" class="pl-5 col-span-4"/>
@@ -78,6 +79,16 @@ export default class Home extends Component {
     )
     }
 
+    componentDidMount(){
+        let _u = JSON.parse(localStorage.getItem('user'));
+        
+        this.setState({
+            name: _u.firstname+ ', '+_u.lastname
+        });
+        console.log('localStorage user'+_u);
+        console.log(this.state.name);
+    }
+
     handleChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
@@ -96,7 +107,7 @@ export default class Home extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        
         const user = {
         name: this.state.name,
         telephone: this.state.telephone,
