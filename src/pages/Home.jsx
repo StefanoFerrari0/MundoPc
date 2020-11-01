@@ -39,7 +39,7 @@ export default class Home extends Component {
                     <img src={ImageBanner} alt="" className="h-full w-full object-fit-cover"/>
                 </div>
             </section>
-            <MainTitle class="text-center mt-10" text="Productos"/>
+            <MainTitle class="text-center mt-10" text="Productos."/>
             <Subtitle class="text-center" text="Armá tu presupuesto"/>
             <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
                 <CardProduct name="Logitech X50 Bluetooth" price="1700" image={Image1}/>

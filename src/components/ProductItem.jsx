@@ -1,7 +1,7 @@
 import React from 'react'
 import Label from '../components/Label'
 
-function ProductItem(props) {
+export default function ProductItem(props) {
     return (
         <div className="grid grid-cols-6 col-span-6 pt-10 mt-5 font-robotoC">        
             <Label class="col-start-2 col-span-1" name="product" text="Producto"/>
@@ -22,5 +22,3 @@ function ProductItem(props) {
         </div>
     );
   }
-
-  export default ProductItem;
