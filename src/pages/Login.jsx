@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+
 import { Link } from 'react-router-dom'
 import MainTitle from '../components/MainTitle'
 import Subtitle from '../components/Subtitle'
 import Label from '../components/Label'
 import Input from '../components/Inputs'
 import Image from '../images/Login.jpeg'
-import userService from '../pages/userService'
+import { login, logout } from '../services/userService'
 import userEvent from '@testing-library/user-event'
-
-const baseUrl="https://localhost:44324/api/User";
-
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
-    userService.logout();
+    logout();
 
     this.state = {
         email: '',
@@ -29,11 +26,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-   
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -46,17 +39,15 @@ class Login extends Component {
     }
 
     this.setState({ loading: true });
-    userService.login(email, password)
+    login(email, password)
         .then(
             user => {
-              //console.log(user);
-                //const { from } = this.props.location.state || { from: { pathname: "/" } };
-                //this.props.history.push(from);
+                console.log("Estas logueado en localStorage!: "+user);
+                const { from } = this.props.location.state || { from: { pathname: "/" } };
+                this.props.history.push(from);
             },
             error => this.setState({ error, loading: false })
         );
-
-
   }  
     render() {
       const { email, password, error, loading } = this.state;
@@ -81,28 +72,18 @@ class Login extends Component {
     }
 
 
-    handleChange = (e) => {
+  handleChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
     this.setState(state);
-    }   
+  }   
 
-    resetForm() {
+  resetForm() {
     this.setState({
       email: "",
       password: "",
       error: null
     });
-    }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    
-    const user = {
-      email: this.state.email,
-      password: this.state.password
-    };
-
   }
 
 }
