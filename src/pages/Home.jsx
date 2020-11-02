@@ -81,11 +81,9 @@ export default class Home extends Component {
 
     componentDidMount(){
         let _u = JSON.parse(localStorage.getItem('user'));
-        
-        this.setState({
-            name: _u.firstname+ ', '+_u.lastname
-        });
-        console.log('localStorage user'+_u);
+        if (_u) this.setState({ name: _u.firstname+ ', '+_u.lastname });
+
+        console.log('localStorage user:'+_u);
         console.log(this.state.name);
     }
 

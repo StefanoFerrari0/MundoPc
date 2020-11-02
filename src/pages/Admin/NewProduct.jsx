@@ -2,7 +2,7 @@ import React, { Component }from 'react'
 import MainTitle from '../../components/MainTitle'
 import Label from '../../components/Label'
 import Input from '../../components/Inputs'
-import {post} from '../../services/productService'
+import ProductService from '../../services/prodService.js'
 
 export default class NewProduct extends Component{
     constructor(props) {
@@ -13,17 +13,53 @@ export default class NewProduct extends Component{
         this.uploadImage = this.uploadImage.bind(this);
 
         this.state = {
+          id: this.props.match.params.id!= null?this.props.match.params.id:-1,
           code: '',
+          name: '',
           description: '',
-          price:0,
+          saleprice:0,
           stock:0,
           img:'',
           image:'',
           submitted: false,
-          loadind: false,
+          loading: false,
           error: '',
           category: ''
         };
+    }
+
+    componentDidMount(){
+      let _id = this.state.id;
+      if (_id !== -1){
+        console.log("id props:"+_id);
+        
+        ProductService.getById(_id).then(product =>{
+          this.setState({
+            code: product.data.code,
+            name: 'nada carnal',
+            description: product.data.description,
+            saleprice: product.data.salePrice,
+            stock: product.data.stock,
+            image: product.data.image
+            
+          });         
+
+          //var response = Buffer.from(product.data.image, 'binary').toString('base64');
+          //console.log(product.data.image);//muestra ristra de bits (string) ===product.data.image
+          
+           //var arrayBufferView = new Uint8Array( this.state.image );
+           var blob = new Blob([product.data.image], { type: 'image/jpg' });//no muestra una imagen
+           //console.log(blob);
+           var urlCreator = window.URL || window.webkitURL;
+           var imageUrl = urlCreator.createObjectURL( blob );
+
+          this.setState({img: imageUrl});
+          console.log(this.img);
+        
+        });
+
+        //console.log("id: "+this.state.id); //todo ok con el id de producto
+      }
     }
 
     render(){
@@ -35,11 +71,12 @@ export default class NewProduct extends Component{
         else{
           $img = (<img className="col-span-2" alt="Imagen para subir"src="https://dummyimage.com/640x360/211F2D/FFFDFD"/>)
         }
+      const {id} = this.state;
 
         return (
           <section className="mx-64 xs:mx-auto sm:mx-auto md:mx-10 lg:mx-40">
             <form className="grid grid-cols-4 col-span-3 pt-10 mx-40 xs:mx-5 sm-mx-5 md-mx-20" onSubmit={this.handleSubmit}>
-            <MainTitle class="col-span-4 mb-5" text="Nuevo producto."/>
+            <MainTitle class="col-span-4 mb-5" text={id==-1?"Nuevo producto.":"Editar producto"}/>
                     <Label class="col-span-2" name="code" text="Código"/>
                     <Label class="col-span-2" name="stock" text="Stock"/>
                         <Input class="pl-5 col-span-2 mr-8 mt-2" name="code" type="number" value={this.state.code}  onChange={this.handleChange}/>
@@ -53,13 +90,13 @@ export default class NewProduct extends Component{
                       <input className="pl-5 col-span-2 my-auto" type="file" name="img" accept=".jpeg, .png, .jpg" onChange={this.uploadImage}/>
                     <Label class="col-span-2 pt-5" name="price" text="Precio"/>
                     <Label class="col-span-2 pt-5 mx-5" name="category" text="Categoria"/>
-                        <Input class="col-span-2 mt-2" name="price" type="number" value={this.state.price} onChange={this.handleChange}/>
+                        <Input class="col-span-2 mt-2" name="saleprice" type="number" value={this.state.saleprice} onChange={this.handleChange}/>
                         <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                             <option>Aca deberia</option>        
                             <option>haber</option>
                             <option>categorias</option>
                         </select>
-                    <button type="submit" className="bg-verde text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-green-600 rounded-lg col-span-4">Crear producto</button>
+                    <button type="submit" className="bg-verde text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-green-600 rounded-lg col-span-4">{id==-1?'Crear producto':'Editar producto'}</button>
             </form>
           </section>
         )
@@ -84,7 +121,7 @@ export default class NewProduct extends Component{
       e.preventDefault();
       this.setState({ submitted: true });
 
-        // stop here if form is invalid
+        // aqui validaciones please
         if (!(this.state.code && this.state.description)) {
             return;
         }
@@ -94,30 +131,38 @@ export default class NewProduct extends Component{
         const data = {
             code: this.state.code,
             description: this.state.description,
-            saleprice: this.state.price,
+            saleprice: this.state.saleprice,
             stock: this.state.stock,
-            image: this.state.image
+            image: this.state.image            
         }  
-        console.log(data);
-        post(data).then(res=>
-        {    
-            const { from } = this.props.location.state || { from: { pathname: "/" } };
+        
+        if (this.state.id!=-1){
+          ProductService.update(this.state.id, data).then(res =>{
+            console.log(res.status);
+            const { from } = this.props.location.state || { from: { pathname: "/admin/products" } };
             this.props.history.push(from);
-        });
+          });
+        }else{
+          ProductService.create(data).then(res=>
+          {    
+              const { from } = this.props.location.state || { from: { pathname: "/admin/products" } };
+              this.props.history.push(from);
+          });
+        }
+        alert("fallo la peticion producto");
     }    
 
     uploadImage(e) {
-      //e.preventDefault();
 
       let file = e.target.files[0];
       if (file){
-        this.setState({img: URL.createObjectURL(file)});
-
+       //this.setState({img: URL.createObjectURL(file)});
         const reader = new FileReader();
         reader.onloadend = (e) => {
           let binaryString = e.target.result;
           this.setState({
-            image: btoa(binaryString)  
+            image: btoa(binaryString),
+            img: reader.result, 
           });
         }
         reader.readAsDataURL(file);
