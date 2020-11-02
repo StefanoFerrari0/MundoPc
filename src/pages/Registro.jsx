@@ -12,7 +12,8 @@ export default class Registro extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.peticionPost = this.peticionPost.bind(this);
+    
     this.state={
       email: '',
       password: '',
@@ -43,27 +44,26 @@ export default class Registro extends Component {
                         <Input name="password" type="password" value={this.state.password} onChange={this.handleChange} class="pl-5 col-span-4"/>
                     <Label class="pt-5 col-span-4" name="password2" text="Confirmar contraseña"/>
                         <Input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} class="pl-5 col-span-4"/>
-                    <button type="submit" className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-rojo rounded-lg col-span-4">Crear cuenta</button>
+                    <button type="button" onClick={this.peticionPost} className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-rojo rounded-lg col-span-4">Crear cuenta</button>
                 </form>
             </div>
         </section>
       )
     }  
     
-    handleChange=async e=>{
-      e.persist();
-      await this.setState({ [e.target.name]: e.target.value}); 
+    handleChange = (e) =>{
+      //e.persist();
+      this.setState({ [e.target.name]: e.target.value}); 
     }
 
-    handleSubmit=async()=>{      
-      this.setState({ submitted: true });
-
+    peticionPost=()=>{
       const data = {
         email: this.state.email,
         password: this.state.password,
         firstname: this.state.firstname,
-        lastname: this.state.lastname,
+        lastname: this.state.lastname
       }
+      console.log("datos newUser: "+data);
 
       //una validacion de vez en cuando viene bien
       if(!(data.password === this.state.password2)){
@@ -79,13 +79,23 @@ export default class Registro extends Component {
       //bandera para animacion de carga
       this.setState({ loading: true }); 
 
-      post(data).then(res=>
-      {
-        if (res === 200){
-          const { from } = this.props.location.state || { from: { pathname: "/login" } };
-          this.props.history.push(from);
-        }
-      });
+      try{
+        post(data).then(res=>
+        {
+            this.handleSubmit();
+            console.log(res)
+        });
+      }
+      catch(e){
+        this.setState({error: e });
+      }
+    }
+
+    handleSubmit=async()=>{      
+      this.setState({ submitted: true });
+      const { from } = this.props.location.state || { from: { pathname: "/login" } };
+      this.props.history.push(from);
+      
     }
 
 }

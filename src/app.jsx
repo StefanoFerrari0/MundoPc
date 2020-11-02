@@ -34,6 +34,7 @@ function App() {
                 <Route exact path="/recuperar-cuenta" component={RecuperarCuenta}/>
                 <Route exact path="/admin/products" component={Products}/>
                 <Route exact path="/admin/newproduct" component={NewProduct}/>
+                <Route exact path="/admin/editproduct/:id" component={NewProduct}/>
                 <Route exact path="/admin/reports" component={Reports}/>
                 <Route exact path="/admin/newreport" component={NewReport}/>
 
