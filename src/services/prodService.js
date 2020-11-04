@@ -21,4 +21,4 @@ class ProductService {
       return http.delete(`/Product/${id}`);
     }
 }
-export default new ProductService;
+export default new ProductService();

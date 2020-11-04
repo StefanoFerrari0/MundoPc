@@ -7,6 +7,11 @@ module.exports = {
       'lg': {'min': '1025px', 'max': '1280px'},
       'xl': {'min': '1281px'},
     },
+    variants: {
+     display: ['responsive', 'hover', 'focus'],
+     visibility: ['responsive', 'hover', 'focus'],
+
+    },
     extend: {
     colors: { rojo: "#EE2056",
             negro: "#211F2D",
