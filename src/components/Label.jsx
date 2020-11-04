@@ -1,10 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function Label(props) {
-    return (
-    <label className={"font-medium text-gray-700 " + props.class } 
-    htmlFor={props.name}>{props.text}</label>
-    );
-  }
+  return (
+    <label className={"font-medium text-gray-700 " + props.class} htmlFor={props.name}>
+      {props.text}
+    </label>
+  );
+}
 
-  export default Label;
+export default Label;

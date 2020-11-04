@@ -1,23 +1,14 @@
-import React, { Component }from 'react'
+import React, { Component } from "react";
 
-export default class HomeAdmin extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            
-        };
-    }
+export default class HomeAdmin extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-    componentDidMount(){
-       
-    }
+  componentDidMount() {}
 
-
-    render(){
-        return (
-          <div>
-
-          </div>
-        )
-    }
+  render() {
+    return <div></div>;
+  }
 }
