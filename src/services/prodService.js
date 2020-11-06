@@ -9,6 +9,10 @@ class ProductService {
       return http.get(`/Product/${id}`);
     }
 
+    getByCode(code) {
+      return http.get("/Product/withCode",code);
+    }
+
     create(data) {
       return http.post("/Product", data);
     }

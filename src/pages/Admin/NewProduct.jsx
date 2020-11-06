@@ -3,6 +3,8 @@ import MainTitle from "../../components/MainTitle";
 import Label from "../../components/Label";
 import Input from "../../components/Inputs";
 import ProductService from "../../services/prodService.js";
+import BrandService from "../../services/brandService";
+import CategoryService from "../../services/categoryServices";
 
 export default class NewProduct extends Component {
   constructor(props) {
@@ -17,18 +19,33 @@ export default class NewProduct extends Component {
       code: "",
       name: "",
       description: "",
-      saleprice: 0,
+      costprice: 0,
+      price: 0,
       stock: 0,
       img: "",
       image: "",
+      brandid: -1,
+      categoryid: -1,
       submitted: false,
       loading: false,
       error: "",
+      brand: "",
       category: "",
+      aliquot:0,
+      categories: [],
+      brands:[]
     };
   }
 
   componentDidMount() {
+    BrandService.getAll().then((b) => {
+      this.setState({brands: b.data});
+    });
+
+    CategoryService.getAll().then((c) => {
+      this.setState({categories: c.data});
+    })
+
     let _id = this.state.id;
     if (_id !== -1) {
       console.log("id props:" + _id);
@@ -36,11 +53,15 @@ export default class NewProduct extends Component {
       ProductService.getById(_id).then((product) => {
         this.setState({
           code: product.data.code,
-          name: "nada carnal",
+          name: product.data.name,
           description: product.data.description,
-          saleprice: product.data.salePrice,
+          price: product.data.price,
           stock: product.data.stock,
           image: product.data.image,
+          brandid: product.data.brandid,
+          categoryid: product.data.categoryid,
+          brand: product.data.brandDescription,
+          category: product.data.categoryDescription
         });
 
         //var response = Buffer.from(product.data.image, 'binary').toString('base64');
@@ -131,14 +152,23 @@ export default class NewProduct extends Component {
             class="col-span-2 mt-2"
             name="saleprice"
             type="number"
-            value={this.state.saleprice}
+            value={this.state.price}
             onChange={this.handleChange}
           />
+
           <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-            <option>Aca deberia</option>
-            <option>haber</option>
-            <option>categorias</option>
+            {this.state.categories.map((_c) => (
+              <option key={_c.id}>{_c.description}</option>
+            ))}
           </select>
+
+          <Label class="col-span-2 pt-5 mx-5" name="brand" text="Marca" /> 
+          <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+            {this.state.brands.map((_b) => (
+              <option key={_b.id}>{_b.description}</option>
+            ))}
+          </select>
+
           <button
             type="submit"
             className="bg-verde text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-green-600 rounded-lg col-span-4"
@@ -149,6 +179,7 @@ export default class NewProduct extends Component {
       </section>
     );
   }
+
 
   handleChange = (event) => {
     if (event.target.name === "code") {
@@ -175,10 +206,15 @@ export default class NewProduct extends Component {
 
     const data = {
       code: this.state.code,
+      name: this.state.name,
       description: this.state.description,
-      saleprice: this.state.saleprice,
+      costprice: this.state.price,
       stock: this.state.stock,
       image: this.state.image,
+      aliquot: 1,
+      costprice: this.state.costprice,
+      brandid: this.state.brandid,
+      categoryid: this.state.categoryid
     };
 
     if (this.state.id !== -1) {

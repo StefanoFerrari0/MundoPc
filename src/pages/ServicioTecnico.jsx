@@ -4,6 +4,7 @@ import Subtitle from "../components/Subtitle";
 import Label from "../components/Label";
 import Input from "../components/Inputs";
 import Image from "../images/ServicioTecnico.jpg";
+import TechnicalServiceService from "../services/techicalSService";
 
 export default class ServicioTecnico extends Component {
 	constructor() {
@@ -30,9 +31,8 @@ export default class ServicioTecnico extends Component {
 					<form className="grid grid-cols-3 col-span-3 pt-10" onSubmit={this.handleSubmit}>
 						<Label class="col-span-3" name="code" text="Código" />
 						<Input
-							value={this.state.code}
 							onChange={this.handleChange}
-							type="number"
+							type="text"
 							name="code"
 							placeholder="ej: 420666"
 							class="pl-5 col-span-3"
@@ -66,7 +66,12 @@ export default class ServicioTecnico extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		window.location.href = `/servicio-tecnico/${this.state.code}`;
+		TechnicalServiceService.getByCode(this.state.code).then(res=>{
+			if (res.status === 200)
+			window.location.href = `/servicio-tecnico/${this.state.code}`;
+		});
+
+		
 
 		//Acá va lo que conecta al back
 	}
