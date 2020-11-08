@@ -15,11 +15,12 @@ export default class ProductX extends Component {
 			stock: Array.from({ length: this.props.stock }, (v, i) => i + 1),
 			price: this.props.price,
 			image: this.props.image,
-			selectedOption: 1,
+			selectedOption: Number.parseInt(this.props.stock),
 		};
 	}
 
 	AddCart() {
+		console.log(this.state.selectedOption);
 		var data = this.state;
 		var a = [];
 		// Parse the serialized data back into an aray of objects
@@ -36,6 +37,7 @@ export default class ProductX extends Component {
 	}
 
 	render() {
+		//console.log(this.state);
 		return (
 			<section className="grid grid-cols-2 grid-flow-col mr-20">
 				<div

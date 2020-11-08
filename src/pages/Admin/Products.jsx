@@ -21,33 +21,32 @@ export default class Products extends Component {
   //faltaria hacer la busqueda https://www.cdata.com/kb/articles/apiserver-react.rst
   retrieveProducts(txt) {
     //(search){}
-    ProductService.getByCode(txt)
+    ProductService.getByCode(txt) 
       .then((products) => {
         let _products = products.data;
 
         this.setState({
           products: _products, //todo ok
         });
-        //console.log(response.data);
       })
       .catch((e) => {
         console.log("catch error: " + e);
       });
-    console.log("retrieveProducts state.products: " + this.state.products);
   }
 
   componentDidMount() {
     this.retrieveProducts();
-    console.log("didMount state.products: " + this.state.products);
   }
 
-  deleteProduct = (idProduct) => {
-    console.log("Id del producto seleccionado:" + idProduct);
-    //si funciona pero borra todo de cheto mal
-    //ProductService.delete(idProduct).then(res=>{
-    //console.log(res.status);
-    //})
+ 
+  deleteProduct(idProduct){
+	console.log("Id del producto seleccionado:" + idProduct);
+	//si funciona pero borra todo de cheto mal
+	//ProductService.delete(idProduct).then(res=>{
+	//console.log(res.status);
+	//})
   };
+
 
   searchProduct = () => {
     this.retrieveProducts(this.state.search);
@@ -94,7 +93,6 @@ export default class Products extends Component {
             name={_p.name}
             price={_p.price}
             stock={_p.stock}
-            delete={this.deleteProduct(_p.id)}
           />
         ))}
       </div>

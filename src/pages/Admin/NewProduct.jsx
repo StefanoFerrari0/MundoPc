@@ -5,6 +5,7 @@ import Input from "../../components/Inputs";
 import ProductService from "../../services/prodService.js";
 import BrandService from "../../services/brandService";
 import CategoryService from "../../services/categoryServices";
+import Select from "react-select";
 
 export default class NewProduct extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ export default class NewProduct extends Component {
       name: "",
       description: "",
       costprice: 0,
-      price: 0,
       stock: 0,
       img: "",
       image: "",
@@ -29,9 +29,7 @@ export default class NewProduct extends Component {
       submitted: false,
       loading: false,
       error: "",
-      brand: "",
-      category: "",
-      aliquot:0,
+      aliquot:10,
       categories: [],
       brands:[]
     };
@@ -55,13 +53,12 @@ export default class NewProduct extends Component {
           code: product.data.code,
           name: product.data.name,
           description: product.data.description,
-          price: product.data.price,
+          aliquot: product.data.aliquot,//no esta en el form
+          costprice: product.data.costprice,
           stock: product.data.stock,
           image: product.data.image,
           brandid: product.data.brandid,
-          categoryid: product.data.categoryid,
-          brand: product.data.brandDescription,
-          category: product.data.categoryDescription
+          categoryid: product.data.categoryid
         });
 
         //var response = Buffer.from(product.data.image, 'binary').toString('base64');
@@ -77,7 +74,7 @@ export default class NewProduct extends Component {
         console.log(this.img);
       });
 
-      //console.log("id: "+this.state.id); //todo ok con el id de producto
+      console.log(this.state.costprice); //todo ok con el id de producto
     }
   }
 
@@ -109,7 +106,7 @@ export default class NewProduct extends Component {
           <Input
             class="pl-5 col-span-2 mr-8 mt-2"
             name="code"
-            type="number"
+            type="text"
             value={this.state.code}
             onChange={this.handleChange}
           />
@@ -150,22 +147,24 @@ export default class NewProduct extends Component {
           <Label class="col-span-2 pt-5 mx-5" name="category" text="Categoria" />
           <Input
             class="col-span-2 mt-2"
-            name="saleprice"
+            name="costprice"
             type="number"
-            value={this.state.price}
+            value={this.state.costprice}
             onChange={this.handleChange}
           />
 
-          <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+          <select name="selectcategory" value={this.state.categoryid} onChange={this.handleChange}
+            className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
             {this.state.categories.map((_c) => (
-              <option key={_c.id}>{_c.description}</option>
+              <option value={_c.id} key={_c.id}>{_c.description}</option>
             ))}
           </select>
 
           <Label class="col-span-2 pt-5 mx-5" name="brand" text="Marca" /> 
-          <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+          <select name="selectbrand" value={this.state.brandid} onChange={this.handleChange}    
+            className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
             {this.state.brands.map((_b) => (
-              <option key={_b.id}>{_b.description}</option>
+              <option value={_b.id} key={_b.id}>{_b.description}</option>
             ))}
           </select>
 
@@ -180,17 +179,22 @@ export default class NewProduct extends Component {
     );
   }
 
-
   handleChange = (event) => {
     if (event.target.name === "code") {
       this.setState({ [event.target.name]: event.target.value });
       return;
+    }    
+    if (event.target.name === "selectcategory"){
+      this.setState({ categoryid: Number(event.target.value)})
+      return;
     }
-
+    if (event.target.name === "selectbrand"){
+      this.setState({ brandid: Number(event.target.value)})
+      return;
+    }
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
 
     this.setState({ [event.target.name]: value });
-    console.log(this.state);
   };
 
   handleSubmit(e) {
@@ -204,22 +208,23 @@ export default class NewProduct extends Component {
 
     this.setState({ loading: true });
 
-    const data = {
+    var data = {
       code: this.state.code,
       name: this.state.name,
       description: this.state.description,
-      costprice: this.state.price,
+      costprice: this.state.costprice,
       stock: this.state.stock,
       image: this.state.image,
-      aliquot: 1,
+      aliquot: this.state.aliquots,
       costprice: this.state.costprice,
       brandid: this.state.brandid,
       categoryid: this.state.categoryid
     };
-
+    
     if (this.state.id !== -1) {
+      Object.assign(data, {id: this.state.id});
       ProductService.update(this.state.id, data).then((res) => {
-        console.log(res.status);
+        console.log(data);
         const { from } = this.props.location.state || {
           from: { pathname: "/admin/products" },
         };
@@ -233,7 +238,7 @@ export default class NewProduct extends Component {
         this.props.history.push(from);
       });
     }
-    alert("fallo la peticion producto");
+    //alert("fallo la peticion producto");
   }
 
   uploadImage(e) {

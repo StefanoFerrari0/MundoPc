@@ -16,9 +16,10 @@ import NewProduct from "./pages/Admin/NewProduct";
 import Reports from "./pages/Admin/Reports";
 import NewReport from "./pages/Admin/NewReport";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 import Error from "./pages/Error";
-
+//<Route exact path="/admin/products" component={Products} />
 function App() {
 	return (
 		<Router>
@@ -34,7 +35,9 @@ function App() {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/registro" component={Registro} />
 				<Route exact path="/recuperar-cuenta" component={RecuperarCuenta} />
-				<Route exact path="/admin/products" component={Products} />
+
+				<PrivateRoute exact path="/admin/products" component={Products} />
+				
 				<Route exact path="/admin/newproduct" component={NewProduct} />
 				<Route exact path="/admin/editproduct/:id" component={NewProduct} />
 				<Route exact path="/admin/reports" component={Reports} />

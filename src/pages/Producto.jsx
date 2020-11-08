@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import MainTitle from "../components/MainTitle";
 import ImageBanner from "../images/bannerHome.jpg";
 import CardProduct from "../components/CardProduct";
+import ProductService from "../services/prodService";
 
 export default class Products extends Component {
   constructor(props) {
@@ -14,7 +15,27 @@ export default class Products extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.retrieveProducts();
+  }
+
+
+  retrieveProducts(txt) {
+    //(search){}
+    ProductService.getByCode(txt) 
+      .then((products) => {
+        let _products = products.data;
+
+        this.setState({
+          products: _products, //todo ok
+        });
+        //console.log(response.data);
+      })
+      .catch((e) => {
+        console.log("catch error: " + e);
+      });
+    //console.log("retrieveProducts state.products: " + this.state.products);
+  }
 
   render() {
     return (
@@ -37,7 +58,7 @@ export default class Products extends Component {
         </div>
         <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
           {this.state.products.map((_p) => (
-            <CardProduct key={_p.id} id={_p.id} name={_p.description} price={_p.price} image={_p.image} />
+            <CardProduct key={_p.id} id={_p.id} name={_p.name} price={_p.price} image={_p.image} />
           ))}
         </div>
       </>

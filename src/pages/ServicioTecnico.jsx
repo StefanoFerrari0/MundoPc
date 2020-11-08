@@ -13,6 +13,7 @@ export default class ServicioTecnico extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.resetForm = this.resetForm.bind(this);
+		this.searchCode = this.searchCode.bind(this);
 		this.state = {
 			code: "",
 			error: null,
@@ -20,6 +21,7 @@ export default class ServicioTecnico extends Component {
 	}
 
 	render() {
+		const {error}= this.state;
 		return (
 			<section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 ml-20">
 				<div className="grid grid-cols-4 pt-20">
@@ -37,6 +39,9 @@ export default class ServicioTecnico extends Component {
 							placeholder="ej: 420666"
 							class="pl-5 col-span-3"
 						/>
+						
+						<Label class="col-span-3" name="error" text={error} />
+
 						<button
 							type="submit"
 							className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-4 border border-rojo rounded-lg mb-32 col-span-3">
@@ -64,15 +69,23 @@ export default class ServicioTecnico extends Component {
 		});
 	}
 
+	searchCode(){
+		
+		TechnicalServiceService.getByCode(this.state.code).then(res=>{
+			let _c = res.data;
+			if (_c !== null){
+				window.location.href = `/servicio-tecnico/${_c}`;
+				//console.log(res.data);
+			}else{
+				this.setState({error: res.statusText})
+			}
+		});
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
-		TechnicalServiceService.getByCode(this.state.code).then(res=>{
-			if (res.status === 200)
-			window.location.href = `/servicio-tecnico/${this.state.code}`;
-		});
-
 		
-
+		this.searchCode();
 		//Acá va lo que conecta al back
 	}
 }
