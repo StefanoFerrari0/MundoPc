@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const userUrl="https://localhost:5001/api/User";
-const userAuthUrl="https://localhost:5001/api/User/authenticate";
+const userUrl="http://localhost:5000/api/User";
+const userAuthUrl="http://localhost:5000/api/User/authenticate";
 
 export async function login(e, p) {    
     try{

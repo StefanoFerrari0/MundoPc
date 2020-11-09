@@ -3,6 +3,9 @@ import MainTitle from "../../components/MainTitle";
 import Label from "../../components/Label";
 import Input from "../../components/Inputs";
 import ProductService from "../../services/prodService.js";
+import BrandService from "../../services/brandService";
+import CategoryService from "../../services/categoryServices";
+import Select from "react-select";
 
 export default class NewProduct extends Component {
   constructor(props) {
@@ -17,18 +20,30 @@ export default class NewProduct extends Component {
       code: "",
       name: "",
       description: "",
-      saleprice: 0,
+      costprice: 0,
       stock: 0,
       img: "",
       image: "",
+      brandid: -1,
+      categoryid: -1,
       submitted: false,
       loading: false,
       error: "",
-      category: "",
+      aliquot:10,
+      categories: [],
+      brands:[]
     };
   }
 
   componentDidMount() {
+    BrandService.getAll().then((b) => {
+      this.setState({brands: b.data});
+    });
+
+    CategoryService.getAll().then((c) => {
+      this.setState({categories: c.data});
+    })
+
     let _id = this.state.id;
     if (_id !== -1) {
       console.log("id props:" + _id);
@@ -36,11 +51,14 @@ export default class NewProduct extends Component {
       ProductService.getById(_id).then((product) => {
         this.setState({
           code: product.data.code,
-          name: "nada carnal",
+          name: product.data.name,
           description: product.data.description,
-          saleprice: product.data.salePrice,
+          aliquot: product.data.aliquot,//no esta en el form
+          costprice: product.data.costprice,
           stock: product.data.stock,
           image: product.data.image,
+          brandid: product.data.brandid,
+          categoryid: product.data.categoryid
         });
 
         //var response = Buffer.from(product.data.image, 'binary').toString('base64');
@@ -56,7 +74,7 @@ export default class NewProduct extends Component {
         console.log(this.img);
       });
 
-      //console.log("id: "+this.state.id); //todo ok con el id de producto
+      console.log(this.state.costprice); //todo ok con el id de producto
     }
   }
 
@@ -88,7 +106,7 @@ export default class NewProduct extends Component {
           <Input
             class="pl-5 col-span-2 mr-8 mt-2"
             name="code"
-            type="number"
+            type="text"
             value={this.state.code}
             onChange={this.handleChange}
           />
@@ -129,16 +147,27 @@ export default class NewProduct extends Component {
           <Label class="col-span-2 pt-5 mx-5" name="category" text="Categoria" />
           <Input
             class="col-span-2 mt-2"
-            name="saleprice"
+            name="costprice"
             type="number"
-            value={this.state.saleprice}
+            value={this.state.costprice}
             onChange={this.handleChange}
           />
-          <select className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-            <option>Aca deberia</option>
-            <option>haber</option>
-            <option>categorias</option>
+
+          <select name="selectcategory" value={this.state.categoryid} onChange={this.handleChange}
+            className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+            {this.state.categories.map((_c) => (
+              <option value={_c.id} key={_c.id}>{_c.description}</option>
+            ))}
           </select>
+
+          <Label class="col-span-2 pt-5 mx-5" name="brand" text="Marca" /> 
+          <select name="selectbrand" value={this.state.brandid} onChange={this.handleChange}    
+            className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+            {this.state.brands.map((_b) => (
+              <option value={_b.id} key={_b.id}>{_b.description}</option>
+            ))}
+          </select>
+
           <button
             type="submit"
             className="bg-verde text-blanco font-bold mt-10 py-2 px-4 mb-5 border border-green-600 rounded-lg col-span-4"
@@ -154,12 +183,18 @@ export default class NewProduct extends Component {
     if (event.target.name === "code") {
       this.setState({ [event.target.name]: event.target.value });
       return;
+    }    
+    if (event.target.name === "selectcategory"){
+      this.setState({ categoryid: Number(event.target.value)})
+      return;
     }
-
+    if (event.target.name === "selectbrand"){
+      this.setState({ brandid: Number(event.target.value)})
+      return;
+    }
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
 
     this.setState({ [event.target.name]: value });
-    console.log(this.state);
   };
 
   handleSubmit(e) {
@@ -173,17 +208,23 @@ export default class NewProduct extends Component {
 
     this.setState({ loading: true });
 
-    const data = {
+    var data = {
       code: this.state.code,
+      name: this.state.name,
       description: this.state.description,
-      saleprice: this.state.saleprice,
+      costprice: this.state.costprice,
       stock: this.state.stock,
       image: this.state.image,
+      aliquot: this.state.aliquots,
+      costprice: this.state.costprice,
+      brandid: this.state.brandid,
+      categoryid: this.state.categoryid
     };
-
+    
     if (this.state.id !== -1) {
+      Object.assign(data, {id: this.state.id});
       ProductService.update(this.state.id, data).then((res) => {
-        console.log(res.status);
+        console.log(data);
         const { from } = this.props.location.state || {
           from: { pathname: "/admin/products" },
         };
@@ -197,7 +238,7 @@ export default class NewProduct extends Component {
         this.props.history.push(from);
       });
     }
-    alert("fallo la peticion producto");
+    //alert("fallo la peticion producto");
   }
 
   uploadImage(e) {
