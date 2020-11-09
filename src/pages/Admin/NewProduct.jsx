@@ -222,9 +222,10 @@ export default class NewProduct extends Component {
     };
     
     if (this.state.id !== -1) {
-      Object.assign(data, {id: this.state.id});
+      data.id= Number(this.state.id);
+      console.log(data);
       ProductService.update(this.state.id, data).then((res) => {
-        console.log(data);
+        
         const { from } = this.props.location.state || {
           from: { pathname: "/admin/products" },
         };
