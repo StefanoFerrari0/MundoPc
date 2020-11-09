@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Logo from "../images/LogoFooter.jpg";
 import { FiMail } from "react-icons/fi";
 import { VscCallIncoming } from "react-icons/vsc";
 import { BsHouseDoor } from "react-icons/bs";
@@ -16,7 +17,7 @@ function Footer() {
 			<div className="grid-1-static ml-5 mr-24 px-1 py-12 relative object-static">
 				<span>
 					<NavLink to="/">
-						<img alt="Logo MundoPc" />
+						<img src={Logo} alt="Logo MundoPc" />
 					</NavLink>
 				</span>
 			</div>
@@ -41,19 +42,17 @@ function Footer() {
 				</ul>
 			</div>
 
-			<div className="grid-3 font-robotoC text-rojo width-80% justify-center  text-center gap-2 pr-40 py-12 ">
-				<ul className="text-blanco text-lg">
+			<div className="flex flex-in-line font-robotoC text-rojo width-80% justify-center text-center gap-2 pr-40 py-12 text-lg">
+				<ul className="text-blanco text-xl">
 					Redes sociales
-					<li className="flex flex-in-line hover justify-center text-rojo">
-						<FiFacebook />
+					<li className="justify-center text-rojo">
 						<a target="_blank" href="www.facebook.com/MundoPCTucson">
-							Facebook
+							<FiFacebook />
 						</a>
 					</li>
-					<li className="flex flex-in-line hover justify-center text-rojo">
-						<FiInstagram />
+					<li className="justify-center text-rojo">
 						<a target="_blank" href="https://www.instagram.com/mundopc_tuc/">
-							Instagram
+							<FiInstagram />
 						</a>
 					</li>
 					<li></li>
