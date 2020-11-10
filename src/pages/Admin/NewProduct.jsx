@@ -21,7 +21,6 @@ export default class NewProduct extends Component {
 			description: "",
 			costprice: 0,
 			stock: 0,
-			img: "",
 			image: "",
 			brandid: -1,
 			categoryid: -1,
@@ -45,45 +44,34 @@ export default class NewProduct extends Component {
 
 		let _id = this.state.id;
 		if (_id !== -1) {
-			console.log("id props:" + _id);
-
 			ProductService.getById(_id).then((product) => {
-				this.setState({
-					code: product.data.code,
-					name: product.data.name,
-					description: product.data.description,
-					aliquot: product.data.aliquot, //no esta en el form
-					costprice: product.data.costprice,
-					stock: product.data.stock,
-					image: product.data.image,
-					brandid: product.data.brandid,
-					categoryid: product.data.categoryid,
-				});
-
-				//var response = Buffer.from(product.data.image, 'binary').toString('base64');
-				//console.log(product.data.image);//muestra ristra de bits (string) ===product.data.image
-
-				//var arrayBufferView = new Uint8Array( this.state.image );
-				var blob = new Blob([product.data.image], { type: "image/jpg" }); //no muestra una imagen
-				//console.log(blob);
-				var urlCreator = window.URL || window.webkitURL;
-				var imageUrl = urlCreator.createObjectURL(blob);
-
-				this.setState({ img: imageUrl });
-				console.log(this.img);
+				this.setState(
+					{
+						code: product.data.code,
+						name: product.data.name,
+						description: product.data.description,
+						aliquot: product.data.aliquot, //no esta en el form
+						costprice: product.data.costprice,
+						stock: product.data.stock,
+						image: product.data.image,
+						brandid: product.data.brandid,
+						categoryid: product.data.categoryid,
+					},
+					() => {
+						console.log(this.state.image);
+					}
+				);
 			});
-
-			console.log(this.state.costprice); //todo ok con el id de producto
 		}
 	}
 
 	render() {
-		let { img } = this.state;
-		let $img = null;
-		if (img) {
-			$img = <img img className="col-span-2" alt="Imagen subida" src={img} />;
+		let { image } = this.state;
+		let $image = null;
+		if (image) {
+			$image = <img className="col-span-2" alt="Imagen subida" src={image} />;
 		} else {
-			$img = (
+			$image = (
 				<img
 					className="col-span-2"
 					alt="Imagen para subir"
@@ -132,7 +120,7 @@ export default class NewProduct extends Component {
 						onChange={this.handleChange}
 						className="appearance-none py-2 px-4 rounded-lg border border-gray-600 placeholder-gray-500 text-gray-900 font-regular focus:outline-none focus:border-rojo pl-5 col-span-4 mt-2"></textarea>
 					<Label class="col-span-4 pt-5" name="img" text="Imagen" />
-					{$img}
+					<img className="col-span-2" alt="Imagen subida" src={image} />
 					<input
 						className="pl-5 col-span-2 my-auto"
 						type="file"
@@ -199,9 +187,10 @@ export default class NewProduct extends Component {
 			this.setState({ brandid: Number(event.target.value) });
 			console.log(event.target.value);
 
-			return;
+			this.setState({ [event.target.name]: value });
+
+			console.log(this.state);
 		}
-		const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
 
 		this.setState({ [event.target.name]: value });
 	};
@@ -215,8 +204,6 @@ export default class NewProduct extends Component {
 			return;
 		}
 
-		this.setState({ loading: true });
-
 		var data = {
 			code: this.state.code,
 			name: this.state.name,
@@ -229,11 +216,10 @@ export default class NewProduct extends Component {
 			categoryid: this.state.categoryid,
 		};
 
-		console.log(data);
 		if (this.state.id !== -1) {
 			data.id = Number(this.state.id);
+			console.log(data);
 			ProductService.update(this.state.id, data).then((res) => {
-				console.log(data);
 				const { from } = this.props.location.state || {
 					from: { pathname: "/admin/products" },
 				};
@@ -247,7 +233,6 @@ export default class NewProduct extends Component {
 				this.props.history.push(from);
 			});
 		}
-
 		//alert("fallo la peticion producto");
 	}
 
@@ -255,15 +240,17 @@ export default class NewProduct extends Component {
 		let file = e.target.files[0];
 		if (file) {
 			//this.setState({img: URL.createObjectURL(file)});
+
 			const reader = new FileReader();
-			reader.onloadend = (e) => {
-				let binaryString = e.target.result;
+			reader.readAsDataURL(file);
+			reader.onloadend = () => {
+				const base64data = reader.result;
+				console.log(base64data);
 				this.setState({
-					image: btoa(binaryString),
-					img: reader.result,
+					image: base64data,
+					//img: URL.createObjectURL(file),
 				});
 			};
-			reader.readAsDataURL(file);
 		}
 	}
 }
