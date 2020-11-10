@@ -5,7 +5,6 @@ import Input from "../../components/Inputs";
 import ProductService from "../../services/prodService.js";
 import BrandService from "../../services/brandService";
 import CategoryService from "../../services/categoryServices";
-import Select from "react-select";
 
 export default class NewProduct extends Component {
   constructor(props) {
@@ -22,7 +21,6 @@ export default class NewProduct extends Component {
       description: "",
       costprice: 0,
       stock: 0,
-      img: "",
       image: "",
       brandid: -1,
       categoryid: -1,
@@ -46,7 +44,6 @@ export default class NewProduct extends Component {
 
     let _id = this.state.id;
     if (_id !== -1) {
-      console.log("id props:" + _id);
 
       ProductService.getById(_id).then((product) => {
         this.setState({
@@ -59,32 +56,20 @@ export default class NewProduct extends Component {
           image: product.data.image,
           brandid: product.data.brandid,
           categoryid: product.data.categoryid
-        });
-
-        //var response = Buffer.from(product.data.image, 'binary').toString('base64');
-        //console.log(product.data.image);//muestra ristra de bits (string) ===product.data.image
-
-        //var arrayBufferView = new Uint8Array( this.state.image );
-        var blob = new Blob([product.data.image], { type: "image/jpg" }); //no muestra una imagen
-        //console.log(blob);
-        var urlCreator = window.URL || window.webkitURL;
-        var imageUrl = urlCreator.createObjectURL(blob);
-
-        this.setState({ img: imageUrl });
-        console.log(this.img);
+          
+        }, () =>{console.log(this.state.image);});
+        
       });
-
-      console.log(this.state.costprice); //todo ok con el id de producto
     }
   }
 
   render() {
-    let { img } = this.state;
-    let $img = null;
-    if (img) {
-      $img = <img img className="col-span-2" alt="Imagen subida" src={img} />;
+    let { image } = this.state;
+    let $image = null;
+    if (image) {
+      $image = <img className="col-span-2" alt="Imagen subida" src={image} />;
     } else {
-      $img = (
+      $image = (
         <img
           className="col-span-2"
           alt="Imagen para subir"
@@ -135,7 +120,7 @@ export default class NewProduct extends Component {
             className="appearance-none py-2 px-4 rounded-lg border border-gray-600 placeholder-gray-500 text-gray-900 font-regular focus:outline-none focus:border-rojo pl-5 col-span-4 mt-2"
           ></textarea>
           <Label class="col-span-4 pt-5" name="img" text="Imagen" />
-          {$img}
+          <img className="col-span-2" alt="Imagen subida" src={image} />
           <input
             className="pl-5 col-span-2 my-auto"
             type="file"
@@ -195,6 +180,8 @@ export default class NewProduct extends Component {
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
 
     this.setState({ [event.target.name]: value });
+
+    console.log(this.state);
   };
 
   handleSubmit(e) {
@@ -216,7 +203,6 @@ export default class NewProduct extends Component {
       stock: this.state.stock,
       image: this.state.image,
       aliquot: this.state.aliquots,
-      costprice: this.state.costprice,
       brandid: this.state.brandid,
       categoryid: this.state.categoryid
     };
@@ -246,15 +232,18 @@ export default class NewProduct extends Component {
     let file = e.target.files[0];
     if (file) {
       //this.setState({img: URL.createObjectURL(file)});
+      
       const reader = new FileReader();
-      reader.onloadend = (e) => {
-        let binaryString = e.target.result;
-        this.setState({
-          image: btoa(binaryString),
-          img: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); 
+      reader.onloadend = () =>  {
+          const base64data = reader.result;
+          console.log(base64data);
+          this.setState({
+            image: base64data,
+            //img: URL.createObjectURL(file),
+          });
+      }     
+        
     }
   }
 }
