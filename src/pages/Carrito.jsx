@@ -52,7 +52,6 @@ export default class Carrito extends Component {
 				</div>
 				<div className="row-start-1 col-span-3 my-auto pt-40 mx-auto text-center xs:pt-5 xs:row-start-2 xs:col-span-9 sm:row-start-2 sm:pt-5 sm:col-span-9">
 					<h1 className="text-4xl font-bold">${total}</h1>
-					<h2 className="text-4xl font-medium italic"></h2>
 					<button
 						type="submit"
 						className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-5 

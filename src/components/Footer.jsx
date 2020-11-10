@@ -46,12 +46,12 @@ function Footer() {
 				<ul className="text-blanco text-xl">
 					Redes sociales
 					<li className="justify-center text-rojo">
-						<a target="_blank" href="www.facebook.com/MundoPCTucson">
+						<a target="_blank" rel="noopener noreferrer" href="www.facebook.com/MundoPCTucson">
 							<FiFacebook />
 						</a>
 					</li>
 					<li className="justify-center text-rojo">
-						<a target="_blank" href="https://www.instagram.com/mundopc_tuc/">
+						<a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/mundopc_tuc/">
 							<FiInstagram />
 						</a>
 					</li>
