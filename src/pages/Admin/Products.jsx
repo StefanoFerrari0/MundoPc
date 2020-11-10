@@ -9,6 +9,7 @@ export default class Products extends Component {
   constructor(props) {
     super(props);
     this.retrieveProducts = this.retrieveProducts.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       products: [],
@@ -20,38 +21,40 @@ export default class Products extends Component {
   //faltaria hacer la busqueda https://www.cdata.com/kb/articles/apiserver-react.rst
   retrieveProducts(txt) {
     //(search){}
-    ProductService.getAll()
+    ProductService.getByCode(txt) 
       .then((products) => {
         let _products = products.data;
-        //aqui filtrar busqueda
 
         this.setState({
           products: _products, //todo ok
         });
-        //console.log(response.data);
       })
       .catch((e) => {
         console.log("catch error: " + e);
       });
-    console.log("retrieveProducts state.products: " + this.state.products);
   }
 
   componentDidMount() {
     this.retrieveProducts();
-    console.log("didMount state.products: " + this.state.products);
   }
 
-  deleteProduct = (idProduct) => {
-    console.log("Id del producto seleccionado:" + idProduct);
-    //si funciona pero borra todo de cheto mal
-    //ProductService.delete(idProduct).then(res=>{
-    //console.log(res.status);
-    //})
+ 
+  deleteProduct(idProduct){
+	console.log("Id del producto seleccionado:" + idProduct);
+	//si funciona pero borra todo de cheto mal
+	//ProductService.delete(idProduct).then(res=>{
+	//console.log(res.status);
+	//})
   };
+
 
   searchProduct = () => {
     this.retrieveProducts(this.state.search);
   };
+
+  handleChange =(e)=>{
+    this.setState({search: e.target.value})
+  }
 
   render() {
     const { search, productId, isUpdate } = this.state;
@@ -64,7 +67,6 @@ export default class Products extends Component {
             name="search"
             type="search"
             placeholder="Buscar producto"
-            value={this.state.search}
             onChange={this.handleChange}
             class="pl-5 mx-5"
           />
@@ -88,10 +90,9 @@ export default class Products extends Component {
             id={_p.id}
             image={_p.image}
             code={_p.code}
-            name={_p.description}
+            name={_p.name}
             price={_p.price}
             stock={_p.stock}
-            delete={this.deleteProduct(_p.id)}
           />
         ))}
       </div>

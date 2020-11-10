@@ -2,6 +2,7 @@ import React from "react";
 import Label from "./Label";
 import { Link } from "react-router-dom";
 
+
 export default function ProductItemAdmin(props) {
 	return (
 		<div className="grid sm:grid-cols-6 grid-cols-7 mx-auto pt-10 mt-5 font-robotoC sm:w-3/3 xl:w-4/5 xl:mx-5">
@@ -22,12 +23,13 @@ export default function ProductItemAdmin(props) {
 				Editar
 			</Link>
 			<Link
-				onClick={props.delete}
-				to={"/admin/products"}
 				className="mt-3 ml-5 sm:ml-2 h-16 col-start-7 sm:col-start-6 col-span-1 bg-transparent hover:bg-rojo text-rojo font-semibold hover:text-blanco py-2 px-4 border border-rojo hover:border-transparent rounded">
 				Eliminar
 			</Link>
 			<hr className="col-span-7 mt-5" />
 		</div>
 	);
+
+
+	
 }
