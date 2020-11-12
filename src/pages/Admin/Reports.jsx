@@ -3,16 +3,22 @@ import MainTitle from "../../components/MainTitle";
 import Input from "../../components/Inputs";
 import { Link } from "react-router-dom";
 import ReportItemAdmin from "../../components/ReportItemAdmin";
+import TechnicalServiceService from "../../services/techicalSService";
 
 export default class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: null,
+      reports: []
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    TechnicalServiceService.getAll().then(report => {
+      this.setState({reports: report.data});
+    });
+  }
 
   render() {
     return (
@@ -38,9 +44,17 @@ export default class Products extends Component {
         >
           Crear reporte
         </Link>
-        <ReportItemAdmin code="420" name="Playstation 4 Slim" date="02/05/20" ready="SI" />
-        <ReportItemAdmin code="666" name="Notebook HP" date="02/05/20" ready="NO" />
-        <ReportItemAdmin code="420" name="Playstation 4 Slim" date="02/05/20" ready="SI" />
+
+        {this.state.reports.map((_r)=>
+          (<ReportItemAdmin
+            key={_r.id}
+            id={_r.id} 
+            code={_r.serialNumber} 
+            name={_r.productRepairDescription} 
+            date={_r.dateReceived}
+            ready={_r.serviseStatus===5?"SI":"NO"}    
+          />
+        ))}
       </div>
     );
   }

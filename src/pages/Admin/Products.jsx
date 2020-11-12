@@ -24,7 +24,7 @@ export default class Products extends Component {
     ProductService.getByCode(txt) 
       .then((products) => {
         let _products = products.data;
-
+        
         this.setState({
           products: _products, //todo ok
         });
@@ -57,7 +57,7 @@ export default class Products extends Component {
   }
 
   render() {
-    const { search, productId, isUpdate } = this.state;
+    const { search } = this.state;
 
     return (
       <div className="container mx-auto">

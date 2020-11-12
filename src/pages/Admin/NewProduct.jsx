@@ -27,7 +27,7 @@ export default class NewProduct extends Component {
       submitted: false,
       loading: false,
       error: "",
-      aliquot:10,
+      aliquot:10,//hard code papa
       categories: [],
       brands:[]
     };
@@ -56,9 +56,7 @@ export default class NewProduct extends Component {
           image: product.data.image,
           brandid: product.data.brandid,
           categoryid: product.data.categoryid
-          
-        }, () =>{console.log(this.state.image);});
-        
+        });        
       });
     }
   }
@@ -120,7 +118,7 @@ export default class NewProduct extends Component {
             className="appearance-none py-2 px-4 rounded-lg border border-gray-600 placeholder-gray-500 text-gray-900 font-regular focus:outline-none focus:border-rojo pl-5 col-span-4 mt-2"
           ></textarea>
           <Label class="col-span-4 pt-5" name="img" text="Imagen" />
-          <img className="col-span-2" alt="Imagen subida" src={image} />
+          {$image}
           <input
             className="pl-5 col-span-2 my-auto"
             type="file"
@@ -180,8 +178,6 @@ export default class NewProduct extends Component {
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
 
     this.setState({ [event.target.name]: value });
-
-    console.log(this.state);
   };
 
   handleSubmit(e) {
@@ -202,14 +198,13 @@ export default class NewProduct extends Component {
       costprice: this.state.costprice,
       stock: this.state.stock,
       image: this.state.image,
-      aliquot: this.state.aliquots,
+      aliquot: this.state.aliquot,
       brandid: this.state.brandid,
       categoryid: this.state.categoryid
     };
     
     if (this.state.id !== -1) {
       data.id= Number(this.state.id);
-      console.log(data);
       ProductService.update(this.state.id, data).then((res) => {
         
         const { from } = this.props.location.state || {
@@ -230,20 +225,14 @@ export default class NewProduct extends Component {
 
   uploadImage(e) {
     let file = e.target.files[0];
-    if (file) {
-      //this.setState({img: URL.createObjectURL(file)});
-      
+    if (file) {      
       const reader = new FileReader();
       reader.readAsDataURL(file); 
       reader.onloadend = () =>  {
-          const base64data = reader.result;
-          console.log(base64data);
           this.setState({
-            image: base64data,
-            //img: URL.createObjectURL(file),
+            image: reader.result
           });
-      }     
-        
+      }          
     }
   }
 }
