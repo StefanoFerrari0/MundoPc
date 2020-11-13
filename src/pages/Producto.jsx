@@ -8,6 +8,7 @@ import ProductService from "../services/prodService";
 export default class Products extends Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       products: [],
@@ -16,7 +17,14 @@ export default class Products extends Component {
   }
 
   componentDidMount() {
-    this.retrieveProducts();
+    ProductService.getAll()
+        .then((products) => {
+          this.setState({
+            products: products.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
+        });
   }
 
 
@@ -37,6 +45,14 @@ export default class Products extends Component {
     //console.log("retrieveProducts state.products: " + this.state.products);
   }
 
+  handleChange(e){
+    this.setState({search: e.target.value})
+  }
+
+  searchProduct(){
+    this.retrieveProducts(this.state.search);
+  }
+
   render() {
     return (
       <>
@@ -53,8 +69,10 @@ export default class Products extends Component {
             type="search"
             name="search"
             placeholder="Search"
+            onChange={this.handleChange}
+            
           />
-          <button type="submit" className="absolute right-0 top-0 mt-5 mr-4"></button>
+          <button type="button" onClick={this.searchProduct} className="absolute right-0 top-0 mt-5 mr-4"></button>
         </div>
         <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
           {this.state.products.map((_p) => (

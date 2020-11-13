@@ -52,7 +52,7 @@ export default class Products extends Component {
             code={_r.serialNumber} 
             name={_r.productRepairDescription} 
             date={_r.dateReceived}
-            ready={_r.serviseStatus===5?"SI":"NO"}    
+            ready={_r.serviseStatus===4?"SI":"NO"}    
           />
         ))}
       </div>

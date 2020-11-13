@@ -18,7 +18,8 @@ export default class Products extends Component {
       search: "",
     };
   }
-  //faltaria hacer la busqueda https://www.cdata.com/kb/articles/apiserver-react.rst
+  
+  
   retrieveProducts() {
     //(search){}
       ProductService.getAll()

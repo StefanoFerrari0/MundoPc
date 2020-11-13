@@ -9,18 +9,18 @@ export default class ConsultaST extends Component {
     super(props);
 
     this.state = {
-      search: this.props.match.params.search,
+      search: this.props.match.params.code,
       query: [],
     };
   }
 
   componentDidMount() {
     console.log(this.state.search);
-    //TechnicalServiceService.getByCode(_search).then(res=>{
-     // if (res.data){
-     //   console.log(res.data);
-     // }
-   // });
+    TechnicalServiceService.getByCode(this.state.search).then(res=>{
+      if (res.data){
+        this.setState({query: res.data});
+      }
+    });
   }
 
   render() {
@@ -34,18 +34,18 @@ export default class ConsultaST extends Component {
           <div>
             <dl>
               <MainTitle class="xs:text-center" text="Consulta." />
-              <TableRow text1="Código:" text2="420666" />
-              <TableRow text1="Dispositivo:" text2="Playstation 4 Slim" />
+              <TableRow text1="Código:" text2={this.state.query.serialNumber} />
+              <TableRow text1="Dispositivo:" text2={this.state.query.productRepairDescription} />
               <TableRow
                 text1="Motivo reparación:"
-                text2="Dejó de prender de la nada, se prende una luz roja. Al prenderla dura 5 seg prendida y se apaga automaticamente."
+                text2={this.state.query.equipmentFailure}
               />
               <TableRow text1="Estado actual del dispositivo:" text2="Reparado" />
-              <TableRow text1="Coste de la reparación:" text2="$3500" />
+              <TableRow text1="Coste de la reparación:" text2={this.state.query.total} />
               <TableRow
                 text1="¿Listo para retirar?:"
                 class1="text-rojo font-bold"
-                text2="Si."
+                text2={this.state.query.serviceStatus===4?"Si.":"No."}
                 class2="uppercase"
               />
             </dl>
