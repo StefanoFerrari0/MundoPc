@@ -22,10 +22,11 @@ export default function ProductItemAdmin(props) {
         hover:text-blanco py-2 px-4 border border-yellow-600 hover:border-transparent rounded">
 				Editar
 			</Link>
-			<Link
+			<button
+				onClick={props.delete}
 				className="mt-3 ml-5 sm:ml-2 h-16 col-start-7 sm:col-start-6 col-span-1 bg-transparent hover:bg-rojo text-rojo font-semibold hover:text-blanco py-2 px-4 border border-rojo hover:border-transparent rounded">
-				Eliminar
-			</Link>
+				Eliminar				
+			</button>
 			<hr className="col-span-7 mt-5" />
 		</div>
 	);

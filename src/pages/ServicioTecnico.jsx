@@ -15,6 +15,7 @@ export default class ServicioTecnico extends Component {
 		this.resetForm = this.resetForm.bind(this);
 		this.searchCode = this.searchCode.bind(this);
 		this.state = {
+			tservise: [],
 			code: "",
 			error: null,
 		};
@@ -60,6 +61,7 @@ export default class ServicioTecnico extends Component {
 		const state = this.state;
 		state[e.target.name] = e.target.value;
 		this.setState(state);
+		console.log(this.state);
 	};
 
 	resetForm() {
@@ -69,12 +71,11 @@ export default class ServicioTecnico extends Component {
 		});
 	}
 
-	searchCode(){
-		
+	searchCode(){		 
 		TechnicalServiceService.getByCode(this.state.code).then(res=>{
 			let _c = res.data;
 			if (_c !== null){
-				window.location.href = `/servicio-tecnico/${_c}`;
+				alert(_c.productRepairDescription)
 				//console.log(res.data);
 			}else{
 				this.setState({error: res.statusText})
@@ -83,7 +84,7 @@ export default class ServicioTecnico extends Component {
 	}
 
 	handleSubmit(e) {
-		e.preventDefault();
+		//e.preventDefault();
 		
 		this.searchCode();
 		//Acá va lo que conecta al back

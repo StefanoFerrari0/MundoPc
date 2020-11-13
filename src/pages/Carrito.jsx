@@ -17,20 +17,22 @@ export default class Carrito extends Component {
 		this.setState({ products: storage });
 	}
 
-	DeleteItem(index) {
+	DeleteItem(idProduct) {
 		//al pasarle aca el index queda viejo y no se actualiza. hay que ver la forma de actualizarlo
 		var product = [];
 		product = JSON.parse(localStorage.getItem("Products")) || [];
-		product.splice(index, 1);
+		var newArray = product.filter(function (product) {
+			return product.id !== idProduct;
+		});
 
-		console.log(product);
-		console.log(index);
+		localStorage.setItem("Products", JSON.stringify(newArray));
+		this.setState({ products: newArray });
 
-		localStorage.setItem("Products", JSON.stringify(product));
-		this.setState({ products: product });
 	}
 
 	render() {
+		let total = Object.values(this.state.products).reduce((t, { total }) => t + total, 0);
+		
 		return (
 			<section className="grid grid-cols-9 grid-rows-1 grid-flow-col ml-20 xs:mx-10 sm:mx-10">
 				<div className="grid grid-cols-6 col-span-6 pt-10 mt-10 font-robotoC xs:col-span-9 sm:col-span-9">

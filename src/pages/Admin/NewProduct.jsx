@@ -111,6 +111,7 @@ export default class NewProduct extends Component {
           <Label class="pt-5 col-span-4" name="description" text="Descripción" />
           <textarea
             name="description"
+            maxLength="500"
             rows="8"
             cols="50"
             value={this.state.description}

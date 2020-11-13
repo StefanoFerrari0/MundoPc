@@ -58,7 +58,7 @@ export default class Products extends Component {
         </div>
         <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
           {this.state.products.map((_p) => (
-            <CardProduct key={_p.id} id={_p.id} name={_p.name} price={_p.price} image={_p.image} />
+            <CardProduct key={_p.id} id={_p.id} name={_p.name} price={_p.price} image={_p.image}/>
           ))}
         </div>
       </>

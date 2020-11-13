@@ -19,6 +19,7 @@ export default class ProductoId extends Component {
 			let _id = Number.parseInt(this.state.id);
 			ProductoServicio.getById(_id).then(res =>{
 				let _data = res.data;
+				console.log(res.data);
 				this.setState({
 					product: _data,
 				});
@@ -27,7 +28,7 @@ export default class ProductoId extends Component {
 			});
 		}
 		console.log(this.state.id);
-		console.log(this.state.product);
+		
 	}
 
 	render() {
@@ -36,30 +37,10 @@ export default class ProductoId extends Component {
 				name={this.state.product.name}
 				price={this.state.product.price}
 				info={this.state.product.description}
-				stock={this.state.product.stock}
+				stock={Array.from({ length: this.state.product.stock }, (v, i) => i + 1)}
 				image={this.state.product.image}
 				id={this.state.product.id}
 			/>
 		);
 	}
 }
-
-/*
-
-
-"Tipo de altavoz: 1.0
-        Tipo de alimentación: Batería de litio recargable; carga por USB
-        Protocolo inalámbrico: Bluetooth
-        Accesorio requerido: Cable de carga USB
-        Tipo de conexión: Inalámbrica Bluetooth, 3,5 mm
-        Indicadores luminosos (LED): Azul, rojo y morado
-        Detalles de la batería: 750 mAh; 3,7 V
-        Duración de batería (recargable): 5 horas
-        Potencia nominal real: 3 W
-        Tamaño de transductor: 38,1 mm
-        Nivel de presión de sonido (SPL máx.): >78 dBC
-        Relación señal/ruido (SNR): <-85 dBr
-        Respuesta de frecuencia: 132 Hz - 20 kHz
-        Impedancia de entrada: 4 ohmios
-        Controles de audio: Volumen+, Volumen Encendido/Apagado/Emparejamiento Bluetooth
-        Clasificación de carga: 5 V, 500 mA (carga USB)"*/

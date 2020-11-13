@@ -36,19 +36,23 @@ export default class Products extends Component {
 
   componentDidMount() {
     this.retrieveProducts();
+    console.log("kkkk")
   }
 
  
   deleteProduct(idProduct){
-	console.log("Id del producto seleccionado:" + idProduct);
-	//si funciona pero borra todo de cheto mal
-	//ProductService.delete(idProduct).then(res=>{
-	//console.log(res.status);
-	//})
+    if (window.confirm("Realmente desea borrar el Producto?"))
+    {
+      ProductService.delete(idProduct).then(res=>{
+        console.log(res.status);
+        this.retrieveProducts();
+      })
+    }
   };
 
 
-  searchProduct = () => {
+  searchProduct = (e) => {
+    e.preventDefault();
     this.retrieveProducts(this.state.search);
   };
 
@@ -62,7 +66,7 @@ export default class Products extends Component {
     return (
       <div className="container mx-auto">
         <MainTitle class="mt-10 mx-5" text="Productos." />
-        <form onSubmit={this.searchProduct}>
+        <form>
           <Input
             name="search"
             type="search"
@@ -71,7 +75,7 @@ export default class Products extends Component {
             class="pl-5 mx-5"
           />
           <button
-            type="submit"
+            onClick={this.searchProduct}
             className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-10 mb-5 mr-10 border border-rojo rounded-lg"
           >
             Buscar
@@ -93,6 +97,7 @@ export default class Products extends Component {
             name={_p.name}
             price={_p.price}
             stock={_p.stock}
+            delete={() => this.deleteProduct(_p.id)}
           />
         ))}
       </div>
