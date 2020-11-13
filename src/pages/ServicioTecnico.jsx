@@ -71,11 +71,11 @@ export default class ServicioTecnico extends Component {
 	}
 
 	searchCode(){		 
-		let _search = this.state.code;
-		if (_search.length>0){
-			TechnicalServiceService.getByCode(_search).then(res=>{
+		let search = this.state.code;
+		if (search.length>0){
+			TechnicalServiceService.getByCode(search).then(res=>{
 				if (res.data){
-					
+					window.location.href = `/servicio-tecnico/${search}`;
 				}
 			});
 		}

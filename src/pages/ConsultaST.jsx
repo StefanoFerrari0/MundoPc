@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import Image from "../images/Consulta.jpg";
 import MainTitle from "../components/MainTitle";
 import TableRow from "../components/TableRow";
+import TechnicalServiceService from "../services/techicalSService";
 
 export default class ConsultaST extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      search: this.props.match.params.search,
       query: [],
     };
   }
 
   componentDidMount() {
-    //aca se busca en la base de datos el codigo y se rellena el props consulta
+    console.log(this.state.search);
+    //TechnicalServiceService.getByCode(_search).then(res=>{
+     // if (res.data){
+     //   console.log(res.data);
+     // }
+   // });
   }
 
   render() {
