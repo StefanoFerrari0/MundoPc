@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ProductX from "../components/ProductX";
-import Image from "../images/parlante.jpg";
 import ProductoServicio from "../services/prodService";
 
 export default class ProductoId extends Component {
@@ -15,20 +14,16 @@ export default class ProductoId extends Component {
 
 	componentDidMount() {
 		//aca se busca en la base de datos el id y se rellena
-		if (this.state.Id != 0){
+		if (this.state.Id !== 0){
 			let _id = Number.parseInt(this.state.id);
 			ProductoServicio.getById(_id).then(res =>{
-				let _data = res.data;
-				console.log(res.data);
 				this.setState({
-					product: _data,
+					product: res.data
 				});
 			}).catch((e) => {
 				console.log("catch error: " + e);
 			});
-		}
-		console.log(this.state.id);
-		
+		}	
 	}
 
 	render() {
@@ -37,7 +32,7 @@ export default class ProductoId extends Component {
 				name={this.state.product.name}
 				price={this.state.product.price}
 				info={this.state.product.description}
-				stock={Array.from({ length: this.state.product.stock }, (v, i) => i + 1)}
+				stock={this.state.product.stock}
 				image={this.state.product.image}
 				id={this.state.product.id}
 			/>

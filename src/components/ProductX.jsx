@@ -12,7 +12,8 @@ export default class ProductX extends Component {
 		this.state = {
 			id: this.props.id,
 			name: this.props.name,
-			stock: this.props.stock,//Array.from({ length: this.props.stock }, (v, i) => i + 1),
+			stock: this.props.stock,
+			select: Array.from({ length: this.props.stock }, (v, i) => i + 1),
 			price: this.props.price,
 			image: this.props.image,
 			selectedOption: 1,
@@ -23,6 +24,7 @@ export default class ProductX extends Component {
 
 	componentDidMount() {
 		this.setState({ total: this.state.price * this.state.selectedOption });
+		console.log(this.state.stock)
 	}
 
 	AddCart(ProductId) {
@@ -89,10 +91,10 @@ export default class ProductX extends Component {
 							text="Cantidad"
 						/>
 						<select
-							value={this.state.selectedOption}
+							//value={this.state.selectedOption}
 							onChange={this.handleChange}
 							className="col-start-3 ml-6 px-8 w-20 col-span-1 block appearance-none bg-blanco border border-negro hover:border-rojo px-2 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-							{this.state.stock.map((item, index) => (
+							{this.state.select.map((item, index) => (
 								<option key={index} value={item}>
 									{item}
 								</option>

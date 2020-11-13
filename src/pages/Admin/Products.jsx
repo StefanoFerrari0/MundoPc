@@ -19,24 +19,21 @@ export default class Products extends Component {
     };
   }
   //faltaria hacer la busqueda https://www.cdata.com/kb/articles/apiserver-react.rst
-  retrieveProducts(txt) {
+  retrieveProducts() {
     //(search){}
-    ProductService.getByCode(txt) 
-      .then((products) => {
-        let _products = products.data;
-        
-        this.setState({
-          products: _products, //todo ok
+      ProductService.getAll()
+        .then((products) => {
+          this.setState({
+            products: products.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
         });
-      })
-      .catch((e) => {
-        console.log("catch error: " + e);
-      });
+    
   }
 
   componentDidMount() {
     this.retrieveProducts();
-    console.log("kkkk")
   }
 
  
@@ -53,7 +50,14 @@ export default class Products extends Component {
 
   searchProduct = (e) => {
     e.preventDefault();
-    this.retrieveProducts(this.state.search);
+    ProductService.getByCode(this.state.search)
+        .then((res) => {
+          this.setState({
+            products: res.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
+        });
   };
 
   handleChange =(e)=>{
