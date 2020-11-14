@@ -10,52 +10,46 @@ import { FiInstagram } from "react-icons/fi";
 
 function Footer() {
 	return (
-		<nav
-			className="grid grid-cols justify-between bg-negro  px-14 font-robotoC 
-                        text-center:22 place-content-evenly xs:static xs:grid-cols-1 
-                        xs:justify-center lg:grid-cols-3 lg:justify-center xl:grid-cols-3">
-			<div className="grid-1-static ml-5 mr-24 px-1 py-12 relative object-static">
-				<span>
-					<NavLink to="/">
-						<img src={Logo} alt="Logo MundoPc" />
-					</NavLink>
-				</span>
+		<nav className="bg-negro grid sm:grid-cols-1 xs:grid-cols-2 grid-cols-3 mt-2">
+			<div className="m-10 sm:mx-auto sm:col-span-2">
+				<NavLink to="/">
+					<img src={Logo} alt="Logo MundoPc" />
+				</NavLink>
 			</div>
 
-			<div className="grid-2 px-24 justify-between text-rojo font-robotoC width-50%  text-center relative block py-10 gap-2">
+			<div className="mt-10 mb-5 text-blanco sm:mx-5">
 				<ul>
-					<li className="flex flex-in-line">
-						<BsPerson />
+					<li className="flex flex-in-line text-blanco text-xl">
+						<BsPerson size="25" className="mt-1 mr-2" />
 						Contacto
 					</li>
-					<li className="flex flex-in-line">
-						<BsHouseDoor /> Maipu 121 (San Miguel de Tucuman,Argentina)
+					<li className="flex flex-in-line mt-2">
+						<BsHouseDoor size="20" className="mt-1 mr-2" /> Maipu 121 (San Miguel de Tucuman,Argentina)
 					</li>
-					<li className="flex flex-in-line">
-						<FiMail />
+					<li className="flex flex-in-line mt-2">
+						<FiMail size="20" className="mt-1 mr-2" />
 						mundopctuc@gmail.com
 					</li>
-					<li className="flex flex-in-line">
-						<VscCallIncoming />
+					<li className="flex flex-in-line mt-2">
+						<VscCallIncoming size="20" className="mt-1 mr-2" />
 						4220187
 					</li>
 				</ul>
 			</div>
 
-			<div className="flex flex-in-line font-robotoC text-rojo width-80% justify-center text-center gap-2 pr-40 py-12 text-lg">
-				<ul className="text-blanco text-xl">
-					Redes sociales
-					<li className="justify-center text-rojo">
-						<a target="_blank" rel="noopener noreferrer" href="www.facebook.com/MundoPCTucson">
-							<FiFacebook />
+			<div className="mt-10 sm:mx-5">
+				<h3 className="text-blanco text-xl">Redes Sociales</h3>
+				<ul className="text-rojo flex flex-in-line mt-2">
+					<li className="justify-center mx-5">
+						<a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/MundoPCTucson">
+							<FiFacebook size="30" />
 						</a>
 					</li>
-					<li className="justify-center text-rojo">
+					<li className="justify-center">
 						<a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/mundopc_tuc/">
-							<FiInstagram />
+							<FiInstagram size="30" />
 						</a>
 					</li>
-					<li></li>
 				</ul>
 			</div>
 		</nav>

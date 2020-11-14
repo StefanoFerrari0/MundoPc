@@ -60,6 +60,7 @@ export default class ServicioTecnico extends Component {
 		const state = this.state;
 		state[e.target.name] = e.target.value;
 		this.setState(state);
+		console.log(this.state);
 	};
 
 	resetForm() {
@@ -69,22 +70,19 @@ export default class ServicioTecnico extends Component {
 		});
 	}
 
-	searchCode(){
-		
-		TechnicalServiceService.getByCode(this.state.code).then(res=>{
-			let _c = res.data;
-			if (_c !== null){
-				window.location.href = `/servicio-tecnico/${_c}`;
-				//console.log(res.data);
-			}else{
-				this.setState({error: res.statusText})
-			}
-		});
+	searchCode(){		 
+		let search = this.state.code;
+		if (search.length>0){
+			TechnicalServiceService.getByCode(search).then(res=>{
+				if (res.data){
+					window.location.href = `/servicio-tecnico/${search}`;
+				}
+			});
+		}
 	}
 
 	handleSubmit(e) {
-		e.preventDefault();
-		
+		e.preventDefault();		
 		this.searchCode();
 		//Acá va lo que conecta al back
 	}

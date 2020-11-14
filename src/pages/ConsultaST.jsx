@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import Image from "../images/Consulta.jpg";
 import MainTitle from "../components/MainTitle";
 import TableRow from "../components/TableRow";
+import TechnicalServiceService from "../services/techicalSService";
 
 export default class ConsultaST extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      search: this.props.match.params.code,
       query: [],
     };
   }
 
   componentDidMount() {
-    //aca se busca en la base de datos el codigo y se rellena el props consulta
+    console.log(this.state.search);
+    TechnicalServiceService.getByCode(this.state.search).then(res=>{
+      if (res.data){
+        this.setState({query: res.data});
+      }
+    });
   }
 
   render() {
@@ -27,18 +34,18 @@ export default class ConsultaST extends Component {
           <div>
             <dl>
               <MainTitle class="xs:text-center" text="Consulta." />
-              <TableRow text1="Código:" text2="420666" />
-              <TableRow text1="Dispositivo:" text2="Playstation 4 Slim" />
+              <TableRow text1="Código:" text2={this.state.query.serialNumber} />
+              <TableRow text1="Dispositivo:" text2={this.state.query.productRepairDescription} />
               <TableRow
                 text1="Motivo reparación:"
-                text2="Dejó de prender de la nada, se prende una luz roja. Al prenderla dura 5 seg prendida y se apaga automaticamente."
+                text2={this.state.query.equipmentFailure}
               />
               <TableRow text1="Estado actual del dispositivo:" text2="Reparado" />
-              <TableRow text1="Coste de la reparación:" text2="$3500" />
+              <TableRow text1="Coste de la reparación:" text2={this.state.query.total} />
               <TableRow
                 text1="¿Listo para retirar?:"
                 class1="text-rojo font-bold"
-                text2="Si."
+                text2={this.state.query.serviceStatus===4?"Si.":"No."}
                 class2="uppercase"
               />
             </dl>

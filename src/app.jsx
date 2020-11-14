@@ -17,9 +17,8 @@ import Reports from "./pages/Admin/Reports";
 import NewReport from "./pages/Admin/NewReport";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-
 import Error from "./pages/Error";
-//<Route exact path="/admin/products" component={Products} />
+
 function App() {
 	return (
 		<Router>
@@ -28,8 +27,8 @@ function App() {
 			<Switch>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/productos" component={Productos} />
-				<PrivateRoute exact path="/servicio-tecnico" component={ServicioTecnico} />
-				<PrivateRoute exact path="/servicio-tecnico/:code" component={ConsultaST} />
+				<Route exact path="/servicio-tecnico" component={ServicioTecnico} />
+				<Route exact path="/servicio-tecnico/:code" component={ConsultaST} />
 
 				<Route exact path="/producto/:id" component={ProductoId} />
 				<Route exact path="/carrito" component={Carrito} />
@@ -37,8 +36,7 @@ function App() {
 				<Route exact path="/registro" component={Registro} />
 				<Route exact path="/recuperar-cuenta" component={RecuperarCuenta} />
 
-				<PrivateRoute exact path="/admin/products" component={Products} />
-
+				<PrivateRoute exact path="/admin/products" component={Products} />				
 				<PrivateRoute exact path="/admin/newproduct" component={NewProduct} />
 				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />
 				<PrivateRoute exact path="/admin/reports" component={Reports} />

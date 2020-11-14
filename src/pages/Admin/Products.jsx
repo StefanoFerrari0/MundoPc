@@ -6,10 +6,10 @@ import ProductItemAdmin from "../../components/ProductItemAdmin";
 import ProductService from "../../services/prodService";
 
 export default class Products extends Component {
-  constructor(props) {
-    super(props);
-    this.retrieveProducts = this.retrieveProducts.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+	constructor(props) {
+		super(props);
+		this.retrieveProducts = this.retrieveProducts.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       products: [],
@@ -18,51 +18,66 @@ export default class Products extends Component {
       search: "",
     };
   }
-  //faltaria hacer la busqueda https://www.cdata.com/kb/articles/apiserver-react.rst
-  retrieveProducts(txt) {
+  
+  
+  retrieveProducts() {
     //(search){}
-    ProductService.getByCode(txt) 
-      .then((products) => {
-        let _products = products.data;
-
-        this.setState({
-          products: _products, //todo ok
+      ProductService.getAll()
+        .then((products) => {
+          this.setState({
+            products: products.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
         });
-      })
-      .catch((e) => {
-        console.log("catch error: " + e);
-      });
+    
   }
 
-  componentDidMount() {
-    this.retrieveProducts();
-  }
+	componentDidMount() {
+		this.retrieveProducts();
+	}
 
  
   deleteProduct(idProduct){
-	console.log("Id del producto seleccionado:" + idProduct);
-	//si funciona pero borra todo de cheto mal
-	//ProductService.delete(idProduct).then(res=>{
-	//console.log(res.status);
-	//})
+    if (window.confirm("Realmente desea borrar el Producto?"))
+    {
+      ProductService.delete(idProduct).then(res=>{
+        console.log(res.status);
+        this.retrieveProducts();
+      })
+    }
   };
 
+	searchProduct = () => {
+		this.retrieveProducts(this.state.search);
+	};
 
-  searchProduct = () => {
-    this.retrieveProducts(this.state.search);
+  searchProduct = (e) => {
+    e.preventDefault();
+    ProductService.getByCode(this.state.search)
+        .then((res) => {
+          this.setState({
+            products: res.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
+        });
   };
 
-  handleChange =(e)=>{
-    this.setState({search: e.target.value})
+  handleChange = (e) => {
+    const state = this.state;
+		state[e.target.name] = e.target.value;
+		this.setState(state);
+		console.log(this.state);
   }
 
   render() {
-    const { search, productId, isUpdate } = this.state;
+    const { search } = this.state;
 
     return (
       <div className="container mx-auto">
         <MainTitle class="mt-10 mx-5" text="Productos." />
-        <form onSubmit={this.searchProduct}>
+        <form>
           <Input
             name="search"
             type="search"
@@ -71,7 +86,7 @@ export default class Products extends Component {
             class="pl-5 mx-5"
           />
           <button
-            type="submit"
+            onClick={this.searchProduct}
             className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-10 mb-5 mr-10 border border-rojo rounded-lg"
           >
             Buscar
@@ -93,6 +108,7 @@ export default class Products extends Component {
             name={_p.name}
             price={_p.price}
             stock={_p.stock}
+            delete={() => this.deleteProduct(_p.id)}
           />
         ))}
       </div>

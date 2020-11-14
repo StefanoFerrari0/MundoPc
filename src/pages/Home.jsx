@@ -9,6 +9,9 @@ import Image2 from "../images/discossd.jpg";
 import Label from "../components/Label";
 import Input from "../components/Inputs";
 import { Link } from "react-router-dom";
+import MessengerService from "../services/messengerService";
+import{ init } from 'emailjs-com';
+init("user_oWViUoPL6A0V1Y11OTetA");
 
 export default class Home extends Component {
 	constructor() {
@@ -154,9 +157,32 @@ export default class Home extends Component {
 
 		const user = {
 			name: this.state.name,
-			telephone: this.state.telephone,
+			phone: this.state.telephone,
 			email: this.state.email,
-			message: this.state.message,
+			query: this.state.message,
 		};
+		MessengerService.create(user).then(res=>{
+			alert("Mensaje enviado...");
+			/*
+			const templateId = 'template_id';	
+			this.sendFeedback(templateId, {
+				message_html: this.state.message, 
+				from_name: this.state.name, 
+				reply_to: this.state.email
+			})
+			*/
+  		
+		});
+	}
+
+	sendFeedback (templateId, variables) {
+		window.emailjs.send(
+		  'gmail', templateId,
+		  variables
+		).then(res => {
+			console.log('Email enviado!')
+		}).catch(err => 
+			console.error('Bueno algo fallo. Aquí hay algunos detalles de lo que ocurrió:', err)
+		)
 	}
 }

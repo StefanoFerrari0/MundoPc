@@ -18,6 +18,7 @@ export default class Carrito extends Component {
 	}
 
 	DeleteItem(idProduct) {
+		//al pasarle aca el index queda viejo y no se actualiza. hay que ver la forma de actualizarlo
 		var product = [];
 		product = JSON.parse(localStorage.getItem("Products")) || [];
 		var newArray = product.filter(function (product) {
@@ -30,6 +31,7 @@ export default class Carrito extends Component {
 
 	render() {
 		let total = Object.values(this.state.products).reduce((t, { total }) => t + total, 0);
+		
 		return (
 			<section className="grid grid-cols-9 grid-rows-1 grid-flow-col ml-20 xs:mx-10 sm:mx-10">
 				<div className="grid grid-cols-6 col-span-6 pt-10 mt-10 font-robotoC xs:col-span-9 sm:col-span-9">
@@ -46,7 +48,7 @@ export default class Carrito extends Component {
 							price={item.price}
 							stock={item.stock}
 							delete={() => this.DeleteItem(item.id)}
-							selectedOption={item.selectedOption}
+							selectedOption={item.quantity}
 						/>
 					))}
 				</div>
