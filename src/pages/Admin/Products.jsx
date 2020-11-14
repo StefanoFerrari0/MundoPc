@@ -6,10 +6,10 @@ import ProductItemAdmin from "../../components/ProductItemAdmin";
 import ProductService from "../../services/prodService";
 
 export default class Products extends Component {
-  constructor(props) {
-    super(props);
-    this.retrieveProducts = this.retrieveProducts.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+	constructor(props) {
+		super(props);
+		this.retrieveProducts = this.retrieveProducts.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       products: [],
@@ -33,9 +33,9 @@ export default class Products extends Component {
     
   }
 
-  componentDidMount() {
-    this.retrieveProducts();
-  }
+	componentDidMount() {
+		this.retrieveProducts();
+	}
 
  
   deleteProduct(idProduct){
@@ -48,6 +48,9 @@ export default class Products extends Component {
     }
   };
 
+	searchProduct = () => {
+		this.retrieveProducts(this.state.search);
+	};
 
   searchProduct = (e) => {
     e.preventDefault();
@@ -61,8 +64,11 @@ export default class Products extends Component {
         });
   };
 
-  handleChange =(e)=>{
-    this.setState({search: e.target.value})
+  handleChange = (e) => {
+    const state = this.state;
+		state[e.target.name] = e.target.value;
+		this.setState(state);
+		console.log(this.state);
   }
 
   render() {

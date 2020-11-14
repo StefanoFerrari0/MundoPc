@@ -7,8 +7,8 @@ import ProductRepairService from "../../services/prodRepairService";
 
 
 export default class NewReport extends Component {
-  constructor() {
-    super();
+	constructor() {
+		super();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

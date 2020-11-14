@@ -27,7 +27,6 @@ export default class Carrito extends Component {
 
 		localStorage.setItem("Products", JSON.stringify(newArray));
 		this.setState({ products: newArray });
-
 	}
 
 	render() {
@@ -48,14 +47,13 @@ export default class Carrito extends Component {
 							name={item.name}
 							price={item.price}
 							stock={item.stock}
-							delete={() => this.DeleteItem(index)}
+							delete={() => this.DeleteItem(item.id)}
 							selectedOption={item.selectedOption}
 						/>
 					))}
 				</div>
 				<div className="row-start-1 col-span-3 my-auto pt-40 mx-auto text-center xs:pt-5 xs:row-start-2 xs:col-span-9 sm:row-start-2 sm:pt-5 sm:col-span-9">
-					<h1 className="text-4xl font-bold">$</h1>
-					<h2 className="text-4xl font-medium italic"></h2>
+					<h1 className="text-4xl font-bold">${total}</h1>
 					<button
 						type="submit"
 						className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-5 

@@ -22,13 +22,14 @@ import Error from "./pages/Error";
 function App() {
 	return (
 		<Router>
-			<Navbar/>
+			<Navbar />
 			<hr />
 			<Switch>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/productos" component={Productos} />
-				<Route exact path="/servicio-tecnico/:code" component={ConsultaST} />
 				<Route exact path="/servicio-tecnico" component={ServicioTecnico} />
+				<Route exact path="/servicio-tecnico/:code" component={ConsultaST} />
+
 				<Route exact path="/producto/:id" component={ProductoId} />
 				<Route exact path="/carrito" component={Carrito} />
 				<Route exact path="/login" component={Login} />

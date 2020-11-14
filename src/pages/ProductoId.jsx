@@ -37,7 +37,7 @@ export default class ProductoId extends Component {
 				name={this.state.product.name}
 				price={this.state.product.price}
 				info={this.state.product.description}
-				stock={this.state.product.stock}
+				stock={Array.from({ length: this.props.stock }, (v, i) => i + 1)}
 				image={this.state.product.image}
 				id={this.state.product.id}
 			/>

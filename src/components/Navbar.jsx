@@ -1,32 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import Logo from "../images/LogoNavbar.png";
 import { NavLink } from "react-router-dom";
-import Logo from "../images/Logo.jpg";
-const Navbar = () => {
-  return (
-    <nav className="bg-negro text-blanco h-16 font-robotoC">
-      <div className="flex font-bold uppercase text-blanco justify-start">
-        <NavLink to="/" className=" ml-5 mr-24 px-4 py-4">
-          <img src={Logo} alt="Logo MundoPc" />
-        </NavLink>
-        <NavLink to="/productos" className="mx-24 px-4 py-5 hover:bg-rojo" activeClassName="bg-rojo">
-          Productos
-        </NavLink>
-        <NavLink
-          to="/servicio-tecnico"
-          className="mx-24 w-full px-4 py-5 hover:bg-rojo"
-          activeClassName="bg-rojo"
-        >
-          Servicio técnico
-        </NavLink>
-        <NavLink to="/carrito" className="mx-24 px-4 py-5 hover:bg-rojo" activeClassName="bg-rojo">
-          Carrito
-        </NavLink>
-        <NavLink to="/login" className="ml-16 bg-rojo px-4 py-5" activeClassName="bg-rojo">
-          Login
-        </NavLink>
-      </div>
-    </nav>
-  );
+import { FiShoppingCart } from "react-icons/fi";
+const Navbar2 = ({}) => {
+	const [isExpanded, toggleExpansion] = useState(false);
+
+	return (
+		<nav className="flex items-center justify-between flex-wrap bg-negro p-6 font-robotoC">
+			<NavLink to="/" className="">
+				<img src={Logo} className="w-48 sm:40" alt="Logo MundoPc" />
+			</NavLink>
+			<div className="block lg:hidden md:hidden xl:hidden">
+				<button
+					className="flex items-center px-3 py-2 border rounded text-red-200 border-rojo hover:text-white hover:border-white"
+					onClick={() => toggleExpansion(!isExpanded)}>
+					<svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+						<title>Menu</title>
+						<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+					</svg>
+				</button>
+			</div>
+			<div
+				className={`${
+					isExpanded ? `block` : `hidden`
+				}  xs:ml-0 sm:ml-0 ml-20 md:ml-0 xs:ml-0  w-full block flex-grow lg:flex lg:items-center lg:w-auto md:flex md:items-center md:w-auto xl:flex xl:items-center xl:w-auto`}>
+				<div className="uppercase font-bold text-lg ml-12 lg:flex-grow md:flex-grow xl:flex-grow">
+					<NavLink
+						to="/productos"
+						className="block mt-4 lg:inline-block md:inline-block xl:inline-block
+                        lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo mr-20 md:mr-10">
+						Productos
+					</NavLink>
+					<NavLink
+						to="/servicio-tecnico"
+						className="block mt-4 lg:inline-block md:inline-block xl:inline-block
+                        lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo mr-20 md:mr-10">
+						Servicio técnico
+					</NavLink>
+				</div>
+				<div className="uppercase font-bold text-lg xs:ml-12 sm:ml-12">
+					<NavLink
+						to="/carrito"
+						className="block mr-20 mt-4 md:mr-10 lg:inline-block md:inline-block xl:inline-block
+                        lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo">
+						<FiShoppingCart size={30} />
+					</NavLink>
+				</div>
+				<div className="uppercase font-bold text-lg xs:ml-12 sm:ml-12">
+					<NavLink
+						to="/login"
+						className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:rojo hover:bg-rojo mt-4 lg:mt-0 md:mt-0 xl:mt-0">
+						Login
+					</NavLink>
+				</div>
+			</div>
+		</nav>
+	);
 };
 
-export default Navbar;
+export default Navbar2;

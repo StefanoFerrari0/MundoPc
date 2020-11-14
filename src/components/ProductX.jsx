@@ -91,10 +91,10 @@ export default class ProductX extends Component {
 							text="Cantidad"
 						/>
 						<select
-							//value={this.state.selectedOption}
+							value={this.state.selectedOption}
 							onChange={this.handleChange}
 							className="col-start-3 ml-6 px-8 w-20 col-span-1 block appearance-none bg-blanco border border-negro hover:border-rojo px-2 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-							{this.state.select.map((item, index) => (
+							{this.state.stock.map((item, index) => (
 								<option key={index} value={item}>
 									{item}
 								</option>
