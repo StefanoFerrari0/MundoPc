@@ -9,6 +9,10 @@ class ProductRepairService {
       return http.get(`/ProductRepair/${id}`);
     }
 
+    getByCode(code) {
+      return http.get(`/ProductRepair/withCode?code=${code}`);
+    }
+
     create(data) {
       return http.post("/ProductRepair", data);
     }

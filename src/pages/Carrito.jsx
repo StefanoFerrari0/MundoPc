@@ -30,7 +30,8 @@ export default class Carrito extends Component {
 	}
 
 	render() {
-		let total = Object.values(this.state.products).reduce((t, { total }) => t + total, 0);
+		var storage = JSON.parse(localStorage.getItem("Products")) || [];
+		let total = Object.values(storage).reduce((t, { total }) => t + total, 0);
 		
 		return (
 			<section className="grid grid-cols-9 grid-rows-1 grid-flow-col ml-20 xs:mx-10 sm:mx-10">
@@ -48,7 +49,7 @@ export default class Carrito extends Component {
 							price={item.price}
 							stock={item.stock}
 							delete={() => this.DeleteItem(item.id)}
-							selectedOption={item.quantity}
+							quantity={item.quantity}
 						/>
 					))}
 				</div>

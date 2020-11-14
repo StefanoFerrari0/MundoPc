@@ -25,7 +25,7 @@ export default class NewReport extends Component {
       totalInputs: 0,
       totalLabor: 0,
       diagnostic: "",
-      userId: (JSON.parse(localStorage.getItem('user'))).id,             //required
+      userId: -1,    //aqui esta el pvto error de esta pantalla
       productRepairId: -1,
       productRepairCode: "",    //required
       productRepairDescription: "",
@@ -41,13 +41,15 @@ export default class NewReport extends Component {
       dateStatus: current.getDate()
     });
     */
-    console.log(this.state);
+   var _user = JSON.parse(localStorage.getItem('user'));
+   this.setState({userId: _user.id});
+    console.log(_user);
   }
 
   render() {
     return (
-      <section className="mx-64">
-        <form className="grid grid-cols-4 col-span-3 pt-10 mx-40" onSubmit={this.handleSubmit}>
+      <section className="xs:mx-auto sm:mx-auto md:mx-10 lg:mx-40 mx-64">
+        <form className="grid grid-cols-4 col-span-3 pt-10 xs:mx-5 sm:mx-5 md:mx-20 mx-40" onSubmit={this.handleSubmit}>
           <MainTitle class="col-span-4 mb-5" text="Nuevo reporte." />
           <Label class="col-span-2" name="code" text="Código" />
           <Label class="col-span-2" name="date" text="Fecha de ingreso" />
@@ -152,7 +154,7 @@ export default class NewReport extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    /*
+    /* validaciones---------------------------------------
     if (!(this.state.serialNumber && 
           this.state.observations &&
           this.state.equipamentFailure &&
@@ -198,13 +200,8 @@ export default class NewReport extends Component {
       categoryId: 1 //hard code papa
     }
     ProductRepairService.create(productRepair);
-    ProductRepairService.getAll().then(res=>{
-      var _prod = res.data;
-      var x = res.data.some(item => productRepair.description === item.description);
-      this.setState({productRepairId: x.Id})
+    ProductRepairService.getByCode(productRepair.code).then(res=>{
+      this.setState({productRepairId: res.data.id});
     })
-
-    //----LOGS------------------------
-    console.log(this.state);
   }
 }
