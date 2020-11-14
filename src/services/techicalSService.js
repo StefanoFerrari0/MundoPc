@@ -10,7 +10,7 @@ class TechnicalServiceService {
     }
 
     getByCode(code) {
-      return http.get('/TechnicalService/withCode?code=' + code);
+      return http.get(`/TechnicalService/withCode?code=${code}`);
     }
 
     create(data) {

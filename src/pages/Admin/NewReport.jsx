@@ -12,6 +12,8 @@ export default class NewReport extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+
     this.state = {
       serialNumber: "",       //required
       observations: "",       //required
@@ -23,7 +25,7 @@ export default class NewReport extends Component {
       totalInputs: 0,
       totalLabor: 0,
       diagnostic: "",
-      userId: -1,             //required
+      userId: (JSON.parse(localStorage.getItem('user'))).id,             //required
       productRepairId: -1,
       productRepairCode: "",    //required
       productRepairDescription: "",
@@ -39,6 +41,7 @@ export default class NewReport extends Component {
       dateStatus: current.getDate()
     });
     */
+    console.log(this.state);
   }
 
   render() {
@@ -161,7 +164,7 @@ export default class NewReport extends Component {
     }*/
 
     this.saveProductRepair();
-    this.setState({userId: localStorage.getItem('user').id});
+    
 
     const data = {
       serialNumber: this.state.serialnumber, 
@@ -197,8 +200,8 @@ export default class NewReport extends Component {
     ProductRepairService.create(productRepair);
     ProductRepairService.getAll().then(res=>{
       var _prod = res.data;
-      var x = _prod.lenght();
-      this.setState({productRepairId: _prod[x].Id})
+      var x = res.data.some(item => productRepair.description === item.description);
+      this.setState({productRepairId: x.Id})
     })
 
     //----LOGS------------------------

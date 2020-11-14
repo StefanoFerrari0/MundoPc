@@ -163,13 +163,14 @@ export default class Home extends Component {
 		};
 		MessengerService.create(user).then(res=>{
 			alert("Mensaje enviado...");
-			const templateId = 'template_id';
-
+			/*
+			const templateId = 'template_id';	
 			this.sendFeedback(templateId, {
 				message_html: this.state.message, 
 				from_name: this.state.name, 
 				reply_to: this.state.email
 			})
+			*/
   		
 		});
 	}

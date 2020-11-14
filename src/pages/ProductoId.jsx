@@ -8,7 +8,8 @@ export default class ProductoId extends Component {
 
 		this.state = {
 			id: this.props.match.params.id != null ? this.props.match.params.id : 0,
-			product: []
+			product: [],
+			stock: 0
 		};
 	}
 
@@ -18,12 +19,16 @@ export default class ProductoId extends Component {
 			let _id = Number.parseInt(this.state.id);
 			ProductoServicio.getById(_id).then(res =>{
 				this.setState({
-					product: res.data
+					product: res.data,
+					stock: res.data.stock
 				});
 			}).catch((e) => {
 				console.log("catch error: " + e);
 			});
 		}	
+		
+		var a = parseInt(this.state.stock);
+		console.log(a);
 	}
 
 	render() {

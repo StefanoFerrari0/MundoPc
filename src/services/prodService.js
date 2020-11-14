@@ -10,7 +10,7 @@ class ProductService {
     }
 
     getByCode(code) {
-      return http.get('/Product/withCode?code=' + code);
+      return http.get(`/Product/withCode?code=${code}`);
     }
 
     create(data) {
