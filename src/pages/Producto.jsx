@@ -70,7 +70,7 @@ export default class Products extends Component {
             onChange={this.handleChange}
             
           />
-          <button type="button" onClick={this.searchProduct} className="absolute right-0 top-0 mt-5 mr-4"></button>
+          <button type="button" onClick={this.searchProduct} className="bg-rojo right-0 top-0 mt-5 mr-4">Buscar</button>
         </div>
         <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
           {this.state.products.map((_p) => (

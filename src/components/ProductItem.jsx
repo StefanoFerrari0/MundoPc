@@ -13,8 +13,19 @@ export default class ProductItem extends Component {
 	}
 
 	handleChange(e) {
-		this.setState({ selectedOption: e.target.value });
-		console.log(this.state);
+		var _quantity = e.target.value;
+		this.setState({ selectedOption: _quantity});
+		var array = [];
+		// Parse the serialized data back into an aray of objects
+		array = JSON.parse(localStorage.getItem("Products")) || [];
+		array.forEach((item) => {
+			if (item.id === this.props.id) {
+				item.quantity = _quantity;
+				item.total = item.price * _quantity;
+				return;
+			}
+		});
+		localStorage.setItem("Products", JSON.stringify(array));
 	}
 
 	render() {
@@ -42,7 +53,7 @@ export default class ProductItem extends Component {
 					))}
 				</select>
 				<h3 className="mt-3 text-center col-start-5 col-span-1">
-					{this.props.price * this.state.selectedOption}
+					{Number(this.props.price) * this.state.selectedOption}
 				</h3>
 				<button
 					className="mt-3 h-16 col-start-6 col-span-1 bg-transparent
