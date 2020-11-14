@@ -37,12 +37,10 @@ export default class Products extends Component {
         this.setState({
           products: _products, //todo ok
         });
-        //console.log(response.data);
       })
       .catch((e) => {
         console.log("catch error: " + e);
       });
-    //console.log("retrieveProducts state.products: " + this.state.products);
   }
 
   handleChange(e){

@@ -48,7 +48,7 @@ export default class Carrito extends Component {
 							price={item.price}
 							stock={item.stock}
 							delete={() => this.DeleteItem(item.id)}
-							selectedOption={item.selectedOption}
+							selectedOption={item.quantity}
 						/>
 					))}
 				</div>

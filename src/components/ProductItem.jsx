@@ -8,24 +8,17 @@ export default class ProductItem extends Component {
 		this.handleChange = this.handleChange.bind(this);
 
 		this.state = {
-			products: [],
-			selectedOption: props.selectedOption,
+			selectedOption: this.props.quantity
 		};
 	}
 
 	handleChange(e) {
 		this.setState({ selectedOption: e.target.value });
-
-		/*var product = [];
-		product = JSON.parse(localStorage.getItem("Products")) || [];
-		const itemAModificar = product.find((item, index) => index === this.props.index);
-		itemAModificar.selectedOption = e.target.value;
-		localStorage.setItem("Products", JSON.stringify(itemAModificar));
-
-		this.setState({ products: product });*/
+		console.log(this.state);
 	}
 
 	render() {
+		const select = Array.from({ length: this.props.stock }, (v, i) => i + 1);
 		return (
 			<div className="grid grid-cols-6 col-span-6 pt-10 mt-5 font-robotoC">
 				<Label class="col-start-2 col-span-1" name="product" text="Producto" />
@@ -42,7 +35,7 @@ export default class ProductItem extends Component {
 					appearance-none h-16 bg-blanco border border-negro
 					hover:border-rojo px-2 py-2 rounded shadow leading-tight 
 					focus:outline-none focus:shadow-outline">
-					{this.props.stock.map((item, index) => (
+					{select.map((item, index) => (
 						<option key={index} value={item}>
 							{item}
 						</option>
