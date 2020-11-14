@@ -67,24 +67,12 @@ export default class NewProduct extends Component {
 
 	render() {
 		let { image } = this.state;
-		let $image = null;
-		if (image) {
-			$image = <img className="col-span-2" alt="Imagen subida" src={image} />;
-		} else {
-			$image = (
-				<img
-					className="col-span-2"
-					alt="Imagen para subir"
-					src="https://dummyimage.com/640x360/211F2D/FFFDFD"
-				/>
-			);
-		}
 		const { id } = this.state;
 
 		return (
-			<section className="mx-64 xs:mx-auto sm:mx-auto md:mx-10 lg:mx-40">
+			<section className="xs:mx-auto sm:mx-auto md:mx-10 lg:mx-40 mx-64">
 				<form
-					className="grid grid-cols-4 col-span-3 pt-10 mx-40 xs:mx-5 sm-mx-5 md-mx-20"
+					className="grid grid-cols-4 col-span-3 pt-10 xs:mx-5 sm:mx-5 md:mx-20 mx-40"
 					onSubmit={this.handleSubmit}>
 					<MainTitle class="col-span-4 mb-5" text={id === -1 ? "Nuevo producto." : "Editar producto"} />
 					<Label class="col-span-2" name="code" text="Código" />
@@ -120,7 +108,11 @@ export default class NewProduct extends Component {
 						onChange={this.handleChange}
 						className="appearance-none py-2 px-4 rounded-lg border border-gray-600 placeholder-gray-500 text-gray-900 font-regular focus:outline-none focus:border-rojo pl-5 col-span-4 mt-2"></textarea>
 					<Label class="col-span-4 pt-5" name="img" text="Imagen" />
-					<img className="col-span-2" alt="Imagen subida" src={image} />
+					<img
+						className="col-span-2"
+						alt="Imagen subida"
+						src={image ? image : "https://dummyimage.com/640x360/211F2D/FFFDFD"}
+					/>
 					<input
 						className="pl-5 col-span-2 my-auto"
 						type="file"
@@ -150,12 +142,12 @@ export default class NewProduct extends Component {
 						))}
 					</select>
 
-					<Label class="col-span-2 pt-5 mx-5" name="brand" text="Marca" />
+					<Label class="col-span-4 pt-5" name="brand" text="Marca" />
 					<select
 						name="selectbrand"
 						value={this.state.brandid}
 						onChange={this.handleChange}
-						className="col-span-2 mx-5 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+						className="col-span-2 py-2 mt-2 block appearance-none bg-blanco border border-negro hover:border-rojo rounded shadow leading-tight focus:outline-none focus:shadow-outline">
 						{this.state.brands.map((_b) => (
 							<option value={_b.id} key={_b.id}>
 								{_b.description}
@@ -187,12 +179,12 @@ export default class NewProduct extends Component {
 			this.setState({ brandid: Number(event.target.value) });
 			console.log(event.target.value);
 
-			this.setState({ [event.target.name]: value });
+			this.setState({ [event.target.name]: event.target.value });
 
 			console.log(this.state);
 		}
 
-		this.setState({ [event.target.name]: value });
+		this.setState({ [event.target.name]: event.target.value });
 	};
 
 	handleSubmit(e) {

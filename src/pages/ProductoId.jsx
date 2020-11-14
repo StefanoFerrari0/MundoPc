@@ -14,6 +14,7 @@ export default class ProductoId extends Component {
 
 	componentDidMount() {
 		//aca se busca en la base de datos el id y se rellena
+		console.log(this.state.id);
 		if (this.state.Id !== 0) {
 			let _id = Number.parseInt(this.state.id);
 			ProductoServicio.getById(_id)
@@ -37,7 +38,7 @@ export default class ProductoId extends Component {
 				name={this.state.product.name}
 				price={this.state.product.price}
 				info={this.state.product.description}
-				stock={this.state.product.stock}
+				stock={Array.from({ length: this.props.stock }, (v, i) => i + 1)}
 				image={this.state.product.image}
 				id={this.state.product.id}
 			/>

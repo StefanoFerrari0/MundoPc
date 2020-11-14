@@ -28,8 +28,8 @@ function App() {
 			<Switch>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/productos" component={Productos} />
-				<PrivateRoute exact path="/servicio-tecnico" component={ServicioTecnico} />
-				<PrivateRoute exact path="/servicio-tecnico/:code" component={ConsultaST} />
+				<Route exact path="/servicio-tecnico" component={ServicioTecnico} />
+				<Route exact path="/servicio-tecnico/:code" component={ConsultaST} />
 
 				<Route exact path="/producto/:id" component={ProductoId} />
 				<Route exact path="/carrito" component={Carrito} />
@@ -37,13 +37,13 @@ function App() {
 				<Route exact path="/registro" component={Registro} />
 				<Route exact path="/recuperar-cuenta" component={RecuperarCuenta} />
 
-				<PrivateRoute exact path="/admin/products" component={Products} />
+				<Route exact path="/admin/products" component={Products} />
 
-				<PrivateRoute exact path="/admin/newproduct" component={NewProduct} />
-				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />
-				<PrivateRoute exact path="/admin/reports" component={Reports} />
-				<PrivateRoute exact path="/admin/editreport/:id" component={NewReport} />
-				<PrivateRoute exact path="/admin/newreport" component={NewReport} />
+				<Route exact path="/admin/newproduct" component={NewProduct} />
+				<Route exact path="/admin/editproduct/:id" component={NewProduct} />
+				<Route exact path="/admin/reports" component={Reports} />
+				<Route exact path="/admin/editreport/:id" component={NewReport} />
+				<Route exact path="/admin/newreport" component={NewReport} />
 
 				<Route component={Error} />
 			</Switch>
