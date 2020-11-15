@@ -3,7 +3,6 @@ import MainTitle from "../../components/MainTitle";
 import Label from "../../components/Label";
 import Input from "../../components/Inputs";
 import TechnicalServiceService from "../../services/techicalSService";
-import ProductRepairService from "../../services/prodRepairService";
 
 
 export default class NewReport extends Component {
@@ -15,18 +14,16 @@ export default class NewReport extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
 
     this.state = {
-      serialNumber: "",       //required
+      serialnumber: "",       //required
       observations: "",       //required
       accesoriesReceived: "",
       equipamentFailure: "",  //required
       dateReceived: "",       //required
       serviceStatus: 0,       //required
       dateStatus: "",
-      totalInputs: 0,
-      totalLabor: 0,
       diagnostic: "",
-      userId: -1,    //aqui esta el pvto error de esta pantalla
-      productRepairId: -1,
+      total: 0,
+      userId: -1,    
       productRepairCode: "",    //required
       productRepairDescription: "",
       error: null,
@@ -34,16 +31,9 @@ export default class NewReport extends Component {
   }
 
   componentDidMount(){
-    /*
-    var current = new Date();
-    this.setState({
-      dateReceived: current.getDate(),
-      dateStatus: current.getDate()
-    });
-    */
-   var _user = JSON.parse(localStorage.getItem('user'));
-   this.setState({userId: _user.id});
-    console.log(_user);
+   
+    const _user = JSON.parse(localStorage.getItem('user'));
+    this.setState({userId: _user.id});
   }
 
   render() {
@@ -55,7 +45,7 @@ export default class NewReport extends Component {
           <Label class="col-span-2" name="date" text="Fecha de ingreso" />
           <Input
             class="pl-5 col-span-2 mr-8 mt-2"
-            name="serialNumber"
+            name="serialnumber"
             type="text"
             onChange={this.handleChange}
           />
@@ -109,7 +99,7 @@ export default class NewReport extends Component {
           <Label class="col-span-2 pt-5 mx-5" name="delivery" text="Estado del Dispositivo" />
           <Input
             class="col-span-2 mt-2"
-            name="totalLabor"
+            name="total"
             type="number"
             value={this.state.price}
             onChange={this.handleChange}
@@ -150,6 +140,7 @@ export default class NewReport extends Component {
 
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
     this.setState({ [event.target.name]: value });
+    console.log(this.state);
   };
 
   handleSubmit(e) {
@@ -165,43 +156,32 @@ export default class NewReport extends Component {
       return;
     }*/
 
-    this.saveProductRepair();
-    
-
     const data = {
-      serialNumber: this.state.serialnumber, 
+      SerialNumber : this.state.serialnumber, 
       observations: this.state.observations,
       accesoriesReceived: this.state.accesoriesReceived, 
-      equipamentFailure: this.state.equipamentFailure, 
+      EquipmentFailure: this.state.equipamentFailure, 
       dateReceived: this.state.dateReceived, 
       serviceStatus: this.state.serviceStatus,       //required
       dateStatus: this.state.dateStatus, 
-      totalInputs: this.state.totalInputs, 
-      totalLabor: this.state.totalLabor, 
+      total: this.state.total, 
       diagnostic: this.state.diagnostic, 
       userId: this.state.userId, 
-      productRepairId: this.state.productRepairId
+      productRepairCode: this.state.productRepairCode,
+      productRepairDescription: this.state.productRepairDescription,
+      productRepairBrandId:1,
+      productRepairCategoryId:1
     }
-
+    console.log(data);
     TechnicalServiceService.create(data).then(res =>{
       alert("Reporte cargado");
       const { from } = this.props.location.state || {
         from: { pathname: "/admin/reports" },
       };
       this.props.history.push(from);
-    });
+    }).catch = (e)=>{
+      console.log(`Ocurrió un error, aquí algunas pistas: ${e}`);
+    };
   }
 
-  saveProductRepair(){
-    const productRepair = {
-      description: this.state.productRepairDescription,
-      code: this.state.productRepairCode,
-      brandId: 1,
-      categoryId: 1 //hard code papa
-    }
-    ProductRepairService.create(productRepair);
-    ProductRepairService.getByCode(productRepair.code).then(res=>{
-      this.setState({productRepairId: res.data.id});
-    })
-  }
 }

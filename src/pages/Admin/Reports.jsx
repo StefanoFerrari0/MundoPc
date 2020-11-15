@@ -20,6 +20,15 @@ export default class Products extends Component {
     });
   }
 
+  deleteReport(idReport){
+    if (window.confirm("Realmente desea borrar el Reporte?"))
+    {
+      TechnicalServiceService.delete(idReport).then(res=>{
+        console.log(res.status);
+      })
+    }
+  };
+
   render() {
     return (
       <div className="container mx-auto">
@@ -52,7 +61,8 @@ export default class Products extends Component {
             code={_r.serialNumber} 
             name={_r.productRepairDescription} 
             date={_r.dateReceived}
-            ready={_r.serviseStatus===4?"SI":"NO"}    
+            ready={_r.serviseStatus===4?"SI":"NO"}
+            delete={() => this.deleteReport(_r.id)}    
           />
         ))}
       </div>

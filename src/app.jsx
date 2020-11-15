@@ -15,6 +15,7 @@ import Products from "./pages/Admin/Products";
 import NewProduct from "./pages/Admin/NewProduct";
 import Reports from "./pages/Admin/Reports";
 import NewReport from "./pages/Admin/NewReport";
+import EditReport from "./pages/Admin/EditReport";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./pages/Error";
@@ -40,8 +41,8 @@ function App() {
 				<PrivateRoute exact path="/admin/newproduct" component={NewProduct} />
 				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />
 				<PrivateRoute exact path="/admin/reports" component={Reports} />
-				<PrivateRoute exact path="/admin/editreport/:id" component={NewReport} />
-				<PrivateRoute exact path="/admin/newreport" component={NewReport} />
+				<PrivateRoute exact path="/admin/editreport/:id" component={EditReport} />
+				<PrivateRoute exact path="/admin/newreport" component={EditReport} />
 
 				<Route component={Error} />
 			</Switch>

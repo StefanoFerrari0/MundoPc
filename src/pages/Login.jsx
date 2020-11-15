@@ -7,7 +7,6 @@ import Label from "../components/Label";
 import Input from "../components/Inputs";
 import Image from "../images/Login.jpeg";
 import { login, logout } from "../services/userService";
-import userEvent from "@testing-library/user-event";
 
 class Login extends Component {
   constructor(props) {
