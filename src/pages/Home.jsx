@@ -11,6 +11,7 @@ import Input from "../components/Inputs";
 import { Link } from "react-router-dom";
 import MessengerService from "../services/messengerService";
 import{ init } from 'emailjs-com';
+import ProductService from '../services/prodService';
 init("user_oWViUoPL6A0V1Y11OTetA");
 
 export default class Home extends Component {
@@ -21,6 +22,7 @@ export default class Home extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.resetForm = this.resetForm.bind(this);
 		this.state = {
+			products:[],
 			name: "",
 			telephone: "",
 			email: "",
@@ -31,6 +33,7 @@ export default class Home extends Component {
 
 	render() {
 		const { name } = this.state;
+		const _p = this.state.products;
 		return (
 			<>
 				<Header
@@ -43,6 +46,12 @@ export default class Home extends Component {
 				<Subtitle class="text-center" text="Armá tu presupuesto" />
 
 				<div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
+					{()=>{for (var i = 0; i < 4; i++) {
+						//<CardProduct key={_p[i].id} id={_p[i].id} name={_p[i].name} price={_p[i].price} image={_p[i].image}/>
+						}						
+					}}
+
+
 					<CardProduct id="1" name="Logitech X50 Bluetooth" price="1700" image={Image1} />
 					<CardProduct id="2" name="Disco SSD Kingston 480GB A400 SATA3 2.5" price="7000" image={Image2} />
 					<CardProduct id="1" name="Logitech X50 Bluetooth" price="1700" image={Image1} />
@@ -129,6 +138,11 @@ export default class Home extends Component {
 	}
 
 	componentDidMount() {
+		ProductService.getAll().then(res=>{
+			this.setState({products: res.data});
+		}).catch=(e)=>{
+			console.log(`Ocurrió algo cargando productos, aquí algunas pistas: ${e}`)
+		};
 		let _u = JSON.parse(localStorage.getItem("user"));
 		if (_u) this.setState({ name: _u.firstname + ", " + _u.lastname });
 
