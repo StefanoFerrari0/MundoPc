@@ -166,25 +166,18 @@ export default class NewProduct extends Component {
 	}
 
 	handleChange = (event) => {
-		if (event.target.name === "code") {
-			this.setState({ [event.target.name]: event.target.value });
-			return;
-		}
 		if (event.target.name === "selectcategory") {
 			this.setState({ categoryid: Number(event.target.value) });
-			console.log(event.target.value);
 			return;
 		}
 		if (event.target.name === "selectbrand") {
 			this.setState({ brandid: Number(event.target.value) });
-			console.log(event.target.value);
 
 			this.setState({ [event.target.name]: event.target.value });
-
-			console.log(this.state);
 		}
 
-		this.setState({ [event.target.name]: event.target.value });
+		const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
+		this.setState({ [event.target.name]: value });
 	};
 
 	handleSubmit(e) {
@@ -203,7 +196,7 @@ export default class NewProduct extends Component {
 			costprice: this.state.costprice,
 			stock: this.state.stock,
 			image: this.state.image,
-			aliquot: this.state.aliquots,
+			aliquot: 10,
 			brandid: this.state.brandid,
 			categoryid: this.state.categoryid,
 		};

@@ -116,13 +116,13 @@ export default class EditReport extends Component {
   handleChange = (event) => {
     if (event.target.name === "serviceStatus")
     {
-      this.setState({...[event.target.name], event.target.value});
+     // this.setState({...[event.target.name], event.target.value});
       return;
     }
 
     const value = event.target.type === "number" ? Number(event.target.value) : event.target.value;
     this.setState({
-      report: {...[event.target.name], value}
+     // report: {...[event.target.name], value}
     });
     console.log(this.state);
 
