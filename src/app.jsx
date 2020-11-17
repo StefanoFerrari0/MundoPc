@@ -42,7 +42,7 @@ function App() {
 				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />
 				<PrivateRoute exact path="/admin/reports" component={Reports} />
 				<PrivateRoute exact path="/admin/editreport/:id" component={EditReport} />
-				<PrivateRoute exact path="/admin/newreport" component={EditReport} />
+				<PrivateRoute exact path="/admin/newreport" component={NewReport} />
 
 				<Route component={Error} />
 			</Switch>
