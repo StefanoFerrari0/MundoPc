@@ -7,6 +7,7 @@ import Label from "../components/Label";
 import Input from "../components/Inputs";
 import Image from "../images/Login.jpeg";
 import { login, logout } from "../services/userService";
+import Message from "../components/Message";
 
 class Login extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Login extends Component {
       password: "",
       submitted: false,
       loading: false,
-      error: "",
+      error: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,17 +41,28 @@ class Login extends Component {
     this.setState({ loading: true });
     login(email, password).then(
       (user) => {
-        console.log("Estas logueado en localStorage!: " + user);
-        const { from } = this.props.location.state || { from: { pathname: "/" } };
-        this.props.history.push(from);
+        if (user){
+          console.log("Estas logueado en localStorage!: " + user);
+          const { from } = this.props.location.state || { from: { pathname: "/" } };
+          this.props.history.push(from);
+        }else{
+          this.setState({error: false});
+        }
       },
       (error) => this.setState({ error, loading: false })
     );
   }
   render() {
+    var alert = null;
     const { email, password, error, loading } = this.state;
+    if (error){ alert=(<Message message="El email o la contraseña no concuerdan."/>);
+    }else{ alert=null;}
+
     return (
+      <>
+      
       <section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 ml-20">
+      {alert}
         <div className="grid grid-cols-4 pt-20">
           <MainTitle class="col-span-4" text="Login." />
           <Subtitle class="col-span-3" text="Inicia sesión rellenando tus datos en los siguientes campos." />
@@ -98,6 +110,7 @@ class Login extends Component {
           style={{ backgroundImage: "url(" + Image + ")" }}
         ></div>
       </section>
+      </>
     );
   }
 

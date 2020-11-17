@@ -114,7 +114,6 @@ export default class EditReport extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event)
     if (event.target.name === "serviceStatus")
     {
       this.setState({ report: [...event.target.name, event.target.value]});
@@ -126,7 +125,6 @@ export default class EditReport extends Component {
       report: [...event.target.name, value]
     });
     console.log(this.state);
-
   };
 
   handleSubmit(e) {

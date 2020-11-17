@@ -5,6 +5,7 @@ import Label from "../components/Label";
 import Input from "../components/Inputs";
 import Image from "../images/ServicioTecnico.jpg";
 import TechnicalServiceService from "../services/techicalSService";
+import Message from "../components/Message";
 
 export default class ServicioTecnico extends Component {
 	constructor() {
@@ -16,13 +17,19 @@ export default class ServicioTecnico extends Component {
 		this.searchCode = this.searchCode.bind(this);
 		this.state = {
 			code: "",
-			error: null,
+			error: false,
 		};
 	}
 
 	render() {
 		const {error}= this.state;
+		var alert = null;
+    	if (error){ alert=(<Message message="El Código del Reporte de Servicio Técnico no existe."/>);
+		}else{ alert=null;}
+		
 		return (
+			<>
+			{alert}
 			<section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 ml-20">
 				<div className="grid grid-cols-4 pt-20">
 					<MainTitle class="col-span-4" text="Servicio técnico." />
@@ -53,6 +60,7 @@ export default class ServicioTecnico extends Component {
 					className="bg-cover bg-center w-full h-full"
 					style={{ backgroundImage: "url(" + Image + ")" }}></div>
 			</section>
+			</>
 		);
 	}
 
@@ -60,13 +68,12 @@ export default class ServicioTecnico extends Component {
 		const state = this.state;
 		state[e.target.name] = e.target.value;
 		this.setState(state);
-		console.log(this.state);
 	};
 
 	resetForm() {
 		this.setState({
 			code: "",
-			error: null,
+			error: false,
 		});
 	}
 
@@ -74,9 +81,11 @@ export default class ServicioTecnico extends Component {
 		let search = this.state.code;
 		if (search.length>0){
 			TechnicalServiceService.getByCode(search).then(res=>{
-				if (res.data){
+				if (res.data.equipmentFailure){
 					window.location.href = `/servicio-tecnico/${search}`;
 				}
+				else
+				{this.setState({error: true})};
 			});
 		}
 	}

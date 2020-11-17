@@ -19,6 +19,7 @@ import EditReport from "./pages/Admin/EditReport";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./pages/Error";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
 
 function App() {
 	return (
@@ -37,6 +38,7 @@ function App() {
 				<Route exact path="/registro" component={Registro} />
 				<Route exact path="/recuperar-cuenta" component={RecuperarCuenta} />
 
+				<PrivateRoute exact path="/admin/homeadmin" component={HomeAdmin} />
 				<PrivateRoute exact path="/admin/products" component={Products} />				
 				<PrivateRoute exact path="/admin/newproduct" component={NewProduct} />
 				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />

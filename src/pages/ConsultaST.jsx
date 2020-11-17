@@ -22,6 +22,20 @@ export default class ConsultaST extends Component {
       }
     });
   }
+  serviceStatusValue(value){
+    switch(value) {
+      case 0:
+        return "Se recibió el dispositivo";
+      case 1:
+        return "El dispositivo esta en reparación";
+      case 2:
+        return "Falta confirmar por los técnicos";
+      case 3:
+        return "El dispositivo esta reparado";
+      case 4:
+        return "El cliente retira sin reparar";
+    }
+  }
 
   render() {
     return (
@@ -40,12 +54,14 @@ export default class ConsultaST extends Component {
                 text1="Motivo reparación:"
                 text2={this.state.query.equipmentFailure}
               />
-              <TableRow text1="Estado actual del dispositivo:" text2="Reparado" />
+              <TableRow text1="Estado actual del dispositivo:" 
+                text2={this.serviceStatusValue(this.state.query.serviceStatus)}
+              />
               <TableRow text1="Coste de la reparación:" text2={this.state.query.total} />
               <TableRow
                 text1="¿Listo para retirar?:"
                 class1="text-rojo font-bold"
-                text2={this.state.query.serviceStatus===4?"Si.":"No."}
+                text2={(this.state.query.serviceStatus===4 || this.state.query.serviceStatus===3)?"Si.":"No."}
                 class2="uppercase"
               />
             </dl>
