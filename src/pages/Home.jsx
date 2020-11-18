@@ -9,6 +9,7 @@ import Input from "../components/Inputs";
 import { Link } from "react-router-dom";
 import MessengerService from "../services/messengerService";
 import ProductService from '../services/prodService';
+import Message from '../components/Message';
 
 
 export default class Home extends Component {
@@ -24,7 +25,7 @@ export default class Home extends Component {
 			telephone: "",
 			email: "",
 			message: "",
-			error: null,
+			isSendMessage: false,
 		};
 	}
 
@@ -32,6 +33,10 @@ export default class Home extends Component {
 		let i=0;
 		const { name } = this.state;
 		const _p = this.state.products;
+		const {isSendMessage}= this.state;
+		var alert = null;
+    	if (isSendMessage){ alert=(<Message message="Su consulta ya fué almacenada."/>);
+		}else{ alert=null;}
 		return (
 			<>
 				<Header
@@ -58,6 +63,7 @@ export default class Home extends Component {
 				</div>
 
 				<section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 mr-20 xs:mx-auto sm:mx-0">
+				{alert}
 					<div className="grid xs:grid-cols-2 sm:grid-cols-2 grid-cols-4 col-span-1 pt-20 pl-16 xs:px-5 sm:px-0 sm:mx-2">
 						<MainTitle class="col-span-4" text="Contactanos." />
 						<Subtitle
@@ -152,43 +158,33 @@ export default class Home extends Component {
 			name: "",
 			telephone: "",
 			email: "",
-			message: "",
-			error: null,
+			message: ""
 		});
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const _message="Gracias por su consulta! le contestaremos lo antes posible";
+		//aqui validaciones
+
 		const user = {
 			name: this.state.name,
 			phone: this.state.telephone,
 			email: this.state.email,
 			query: this.state.message,
 		};
-		console.log(this.state);
-		console.log(_message);
 		MessengerService.create(user).then(res=>{
-			alert("Mensaje enviado...");
-			
-			const templateId = 'template_jtxh4ni';	
-			this.sendFeedback(templateId, {
+			this.setState({isSendMessage: true});
+
+			const _message="Gracias por su consulta! le contestaremos lo antes posible";//espere sentado	
+			MessengerService.sendFeedback({
 				to_name: this.state.name,
 				message: _message, 
 				from_name: this.state.name, 
 				to_email: this.state.email
 			})
+			this.resetForm();
 		});
 	}
 
-	sendFeedback (templateId, variables) {
-		window.emailjs.send(
-		  'service_u9e7d0c', templateId,
-		  variables
-		).then(res => {
-			console.log('Email enviado!')
-		}).catch(err => 
-			console.error('Bueno algo fallo. Aquí hay algunos detalles de lo que ocurrió:', err)
-		)
-	}
+	
 }
