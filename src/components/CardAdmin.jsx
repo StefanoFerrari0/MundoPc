@@ -3,14 +3,18 @@ import { Link } from "react-router-dom";
 
 function CardAdmin(props) {
 	return (
-		<Link to={`/producto/${props.id}`}>
-			<article className="col-span-1 xs:w-full sm:3/4 md:w-full w-3/4 grid grid-cols-2 rounded rounded-lg border border-rojo bg-negro overflow-hidden shadow-lg">
-				
-				<div className="col-span-2 px-6 py-4">
+		<Link to={`/admin/${props.link}`}>
+			<div className="p-2 sm:p-10 text-center cursor-pointer text-white">
+				<div className="py-16 max-w-sm rounded overflow-hidden shadow-lg bg-rojo hover:bg-green-600 transition duration-500">
+					{props.icon}
+					<div className="space-y-5">
+						<div className="font-bold text-3xl mb-2">{props.name}</div>
+					</div>
 				</div>
-			</article>
+			</div>
 		</Link>
 	);
 }
 
 export default CardAdmin;
+

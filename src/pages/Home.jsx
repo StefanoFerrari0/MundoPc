@@ -4,15 +4,12 @@ import MainTitle from "../components/MainTitle";
 import Subtitle from "../components/Subtitle";
 import ImageBanner from "../images/bannerHome.jpg";
 import CardProduct from "../components/CardProduct";
-import Image1 from "../images/parlante.jpg";
-import Image2 from "../images/discossd.jpg";
 import Label from "../components/Label";
 import Input from "../components/Inputs";
 import { Link } from "react-router-dom";
 import MessengerService from "../services/messengerService";
-import{ init } from 'emailjs-com';
 import ProductService from '../services/prodService';
-init("user_oWViUoPL6A0V1Y11OTetA");
+
 
 export default class Home extends Component {
 	constructor() {
@@ -32,6 +29,7 @@ export default class Home extends Component {
 	}
 
 	render() {
+		let i=0;
 		const { name } = this.state;
 		const _p = this.state.products;
 		return (
@@ -46,16 +44,12 @@ export default class Home extends Component {
 				<Subtitle class="text-center" text="Armá tu presupuesto" />
 
 				<div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
-					{()=>{for (var i = 0; i < 4; i++) {
-						//<CardProduct key={_p[i].id} id={_p[i].id} name={_p[i].name} price={_p[i].price} image={_p[i].image}/>
-						}						
-					}}
-
-
-					<CardProduct id="1" name="Logitech X50 Bluetooth" price="1700" image={Image1} />
-					<CardProduct id="2" name="Disco SSD Kingston 480GB A400 SATA3 2.5" price="7000" image={Image2} />
-					<CardProduct id="1" name="Logitech X50 Bluetooth" price="1700" image={Image1} />
-					<CardProduct id="2" name="Disco SSD Kingston 480GB A400 SATA3 2.5" price="7000" image={Image2} />
+					{	
+						_p.slice(1,5).map((p) => (
+            				<CardProduct key={p.id} id={p.id} name={p.name} price={p.price} image={p.image}/>
+								
+						))
+					}
 					<Link
 						to="/productos"
 						className="col-span-4 xs:col-span-2 sm:col-span-2 mx-auto mt-5 py-2 px-10 bg-rojo hover:bg-red-500 text-blanco font-bold text-center border border-rojo rounded-lg">
@@ -143,11 +137,8 @@ export default class Home extends Component {
 		}).catch=(e)=>{
 			console.log(`Ocurrió algo cargando productos, aquí algunas pistas: ${e}`)
 		};
-		let _u = JSON.parse(localStorage.getItem("user"));
-		if (_u) this.setState({ name: _u.firstname + ", " + _u.lastname });
-
-		console.log("localStorage user:" + _u);
-		console.log(this.state.name);
+		//no se usa para naa
+		const _u = JSON.parse(localStorage.getItem("user"));
 	}
 
 	handleChange = (e) => {
@@ -168,30 +159,31 @@ export default class Home extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-
+		const _message="Gracias por su consulta! le contestaremos lo antes posible";
 		const user = {
 			name: this.state.name,
 			phone: this.state.telephone,
 			email: this.state.email,
 			query: this.state.message,
 		};
+		console.log(this.state);
+		console.log(_message);
 		MessengerService.create(user).then(res=>{
 			alert("Mensaje enviado...");
-			/*
-			const templateId = 'template_id';	
+			
+			const templateId = 'template_jtxh4ni';	
 			this.sendFeedback(templateId, {
-				message_html: this.state.message, 
+				to_name: this.state.name,
+				message: _message, 
 				from_name: this.state.name, 
-				reply_to: this.state.email
+				to_email: this.state.email
 			})
-			*/
-  		
 		});
 	}
 
 	sendFeedback (templateId, variables) {
 		window.emailjs.send(
-		  'gmail', templateId,
+		  'service_u9e7d0c', templateId,
 		  variables
 		).then(res => {
 			console.log('Email enviado!')

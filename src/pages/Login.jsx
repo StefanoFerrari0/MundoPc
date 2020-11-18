@@ -41,12 +41,18 @@ class Login extends Component {
     this.setState({ loading: true });
     login(email, password).then(
       (user) => {
-        if (user){
-          console.log("Estas logueado en localStorage!: " + user);
+        const _u = JSON.parse(localStorage.getItem("user"));
+
+        if (_u.role===0){
+          const { from } = this.props.location.state || { from: { pathname: "/admin/homeadmin" } };
+          this.props.history.push(from);
+          return;
+        }
+
+        if (_u.role===1){
           const { from } = this.props.location.state || { from: { pathname: "/" } };
           this.props.history.push(from);
-        }else{
-          this.setState({error: false});
+          return;
         }
       },
       (error) => this.setState({ error, loading: false })

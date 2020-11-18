@@ -4,7 +4,7 @@ const userUrl="http://localhost:5000/api/User";
 const userAuthUrl="http://localhost:5000/api/User/authenticate";
 
 export async function login(e, p) {    
-    try{
+    
         await axios.post(userAuthUrl, {
             email: e,
             password: p
@@ -17,22 +17,23 @@ export async function login(e, p) {
             if (user) {
                 // store user details and basic auth credentials in local storage 
                 // to keep user logged in between page refreshes
+                user.email = e;
                 user.config = '';
                 //descomentar para guardar token en localStorage
                 //user.data.authdata = window.btoa(e+':'+p);
                 localStorage.setItem('user', JSON.stringify(user.data));
             }            
             return user;   
-        });        
-    }catch (e){
-        console.log(e);
-        return e.data;
-    }
+        }).catch(function(e) {
+            console.log(e);
+            return null;
+        });
 }
 
 export function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
+    localStorage.removeItem('Products');
 }
 
 export async function getAll() {
