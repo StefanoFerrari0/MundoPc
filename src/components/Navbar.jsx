@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../images/LogoNavbar.png";
 import { NavLink } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
-const Navbar2 = ({}) => {
+import { logout } from "../services/userService";
+
+const Navbar = ({}) => {
 	const [isExpanded, toggleExpansion] = useState(false);
+	const [isLogged, loggedFunction] = useState(false);
+
+	useEffect(() => {
+		var user = JSON.parse(localStorage.getItem("user"));
+		if (user!==null)
+		{
+			loggedFunction(true);
+		}
+		else{
+			loggedFunction(false);
+		}
+	});
 
 	return (
 		<nav className="flex items-center justify-between flex-wrap bg-negro p-6 font-robotoC">
@@ -48,9 +62,10 @@ const Navbar2 = ({}) => {
 				</div>
 				<div className="uppercase font-bold text-lg xs:ml-12 sm:ml-12">
 					<NavLink
-						to="/login"
+						to={!isLogged ? "/login" : "/"}
+						onClick={!isLogged ? null : logout}
 						className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:rojo hover:bg-rojo mt-4 lg:mt-0 md:mt-0 xl:mt-0">
-						Login
+						{!isLogged ? "Login" : "Logout"}
 					</NavLink>
 				</div>
 			</div>
@@ -58,4 +73,4 @@ const Navbar2 = ({}) => {
 	);
 };
 
-export default Navbar2;
+export default Navbar;

@@ -9,8 +9,8 @@ class ProductRepairService {
       return http.get(`/ProductRepair/${id}`);
     }
 
-    getByCode(code) {
-      return http.get(`/ProductRepair/withCode?code=${code}`);
+    async getByCode(code) {
+      return await http.get(`/ProductRepair/withCode?code=${code}`);
     }
 
     create(data) {

@@ -48,10 +48,6 @@ export default class Products extends Component {
     }
   };
 
-	searchProduct = () => {
-		this.retrieveProducts(this.state.search);
-	};
-
   searchProduct = (e) => {
     e.preventDefault();
     ProductService.getByCode(this.state.search)

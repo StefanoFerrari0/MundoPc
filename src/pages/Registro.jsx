@@ -5,6 +5,7 @@ import Subtitle from "../components/Subtitle";
 import Input from "../components/Inputs";
 import Label from "../components/Label";
 import { post } from "../services/userService";
+import Message from "../components/Message";
 
 export default class Registro extends Component {
   constructor(props) {
@@ -22,11 +23,18 @@ export default class Registro extends Component {
       submitted: false,
       loadind: false,
       password2: "",
-      error: "",
+      error: false,
     };
   }
   render() {
+    var alert = null;
+    const { error } = this.state;
+    if (error){ alert=(<Message message="Las contraseñas no son iguales."/>);
+    }else{ alert=null;}
+
     return (
+      <>
+      {alert}
       <section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 xs:mx-auto sm:mx-auto mr-20">
         <div
           className="bg-cover bg-left-top w-full h-full"
@@ -90,6 +98,7 @@ export default class Registro extends Component {
           </form>
         </div>
       </section>
+      </>
     );
   }
 
@@ -104,12 +113,14 @@ export default class Registro extends Component {
       password: this.state.password,
       firstname: this.state.firstname,
       lastname: this.state.lastname,
+      role: 1
     };
     console.log("datos newUser: " + data);
 
     //una validacion de vez en cuando viene bien
     if (!(data.password === this.state.password2)) {
-      alert("las contraseñas no coinciden");
+      this.setState({error: true});
+      //alert("las contraseñas no coinciden");
       return;
     }
 

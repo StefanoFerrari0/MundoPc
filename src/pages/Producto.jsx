@@ -27,28 +27,21 @@ export default class Products extends Component {
         });
   }
 
-
-  retrieveProducts(txt) {
-    //(search){}
-    ProductService.getByCode(txt) 
-      .then((products) => {
-        let _products = products.data;
-
-        this.setState({
-          products: _products, //todo ok
-        });
-      })
-      .catch((e) => {
-        console.log("catch error: " + e);
-      });
-  }
-
-  handleChange(e){
+  handleChange=(e)=>{
     this.setState({search: e.target.value})
+    console.log(this.state)
   }
 
-  searchProduct(){
-    this.retrieveProducts(this.state.search);
+  searchProduct = (e) =>{
+    e.preventDefault();
+    ProductService.getByCode(this.state.search)
+        .then((res) => {
+          this.setState({
+            products: res.data, //veremos
+          });  
+        }).catch((e) => {
+          console.log("catch error: " + e);
+        });
   }
 
   render() {
@@ -70,7 +63,10 @@ export default class Products extends Component {
             onChange={this.handleChange}
             
           />
-          <button type="button" onClick={this.searchProduct} className="bg-rojo right-0 top-0 mt-5 mr-4">Buscar</button>
+          <button onClick={this.searchProduct} 
+            className="bg-rojo hover:bg-red-500 text-blanco font-bold mt-10 py-2 px-10 mb-5 mr-10 border border-rojo rounded-lg">
+            Buscar
+          </button>
         </div>
         <div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
           {this.state.products.map((_p) => (
