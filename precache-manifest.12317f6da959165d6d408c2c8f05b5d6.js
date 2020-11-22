@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "08f4f4a889419f94b41d6c3e6b7db85e",
+    "revision": "37d0cd86f01d65a126e44d291bd3c550",
     "url": "/MundoPc/index.html"
   },
   {
-    "revision": "3ef992b6b89785373ea7",
+    "revision": "9f6e3b26da62e51a2952",
     "url": "/MundoPc/static/css/main.4227f05b.chunk.css"
   },
   {
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/MundoPc/static/js/4.b21cbe45.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3ef992b6b89785373ea7",
-    "url": "/MundoPc/static/js/main.377185ee.chunk.js"
+    "revision": "9f6e3b26da62e51a2952",
+    "url": "/MundoPc/static/js/main.d1bc1df5.chunk.js"
   },
   {
     "revision": "58705bab57236971bfa4",

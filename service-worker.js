@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/MundoPc/precache-manifest.8416ba0631f39660f460ed22fed38b3d.js"
+  "/MundoPc/precache-manifest.12317f6da959165d6d408c2c8f05b5d6.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/MundoPc/static/css/main.4227f05b.chunk.css",
-    "main.js": "/MundoPc/static/js/main.377185ee.chunk.js",
-    "main.js.map": "/MundoPc/static/js/main.377185ee.chunk.js.map",
+    "main.js": "/MundoPc/static/js/main.d1bc1df5.chunk.js",
+    "main.js.map": "/MundoPc/static/js/main.d1bc1df5.chunk.js.map",
     "runtime-main.js": "/MundoPc/static/js/runtime-main.3c9c9aaf.js",
     "runtime-main.js.map": "/MundoPc/static/js/runtime-main.3c9c9aaf.js.map",
     "static/js/2.7fe89f13.chunk.js": "/MundoPc/static/js/2.7fe89f13.chunk.js",
@@ -12,7 +12,7 @@
     "static/js/4.b21cbe45.chunk.js": "/MundoPc/static/js/4.b21cbe45.chunk.js",
     "static/js/4.b21cbe45.chunk.js.map": "/MundoPc/static/js/4.b21cbe45.chunk.js.map",
     "index.html": "/MundoPc/index.html",
-    "precache-manifest.8416ba0631f39660f460ed22fed38b3d.js": "/MundoPc/precache-manifest.8416ba0631f39660f460ed22fed38b3d.js",
+    "precache-manifest.12317f6da959165d6d408c2c8f05b5d6.js": "/MundoPc/precache-manifest.12317f6da959165d6d408c2c8f05b5d6.js",
     "service-worker.js": "/MundoPc/service-worker.js",
     "static/css/main.4227f05b.chunk.css.map": "/MundoPc/static/css/main.4227f05b.chunk.css.map",
     "static/js/2.7fe89f13.chunk.js.LICENSE.txt": "/MundoPc/static/js/2.7fe89f13.chunk.js.LICENSE.txt",
@@ -30,6 +30,6 @@
     "static/js/runtime-main.3c9c9aaf.js",
     "static/js/3.d826c4a3.chunk.js",
     "static/css/main.4227f05b.chunk.css",
-    "static/js/main.377185ee.chunk.js"
+    "static/js/main.d1bc1df5.chunk.js"
   ]
 }
