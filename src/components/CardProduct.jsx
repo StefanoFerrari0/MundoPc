@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function CardProduct(props) {
 	return (
-		<Link to={`/producto/${props.id}`}>
+		<Link to={`/MundoPc/producto/${props.id}`}>
 			<article className="col-span-1 xs:w-full sm:3/4 md:w-full w-3/4 grid grid-cols-2 rounded rounded-lg border border-rojo bg-negro overflow-hidden shadow-lg">
 				<img className="col-span-2 w-full sm:h-40 h-48 " src={props.image} alt={props.name} />
 				<div className="col-span-2 px-6 py-4">

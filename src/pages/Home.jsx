@@ -8,9 +8,8 @@ import Label from "../components/Label";
 import Input from "../components/Inputs";
 import { Link } from "react-router-dom";
 import MessengerService from "../services/messengerService";
-import ProductService from '../services/prodService';
-import Message from '../components/Message';
-
+import ProductService from "../services/prodService";
+import Message from "../components/Message";
 
 export default class Home extends Component {
 	constructor() {
@@ -20,7 +19,7 @@ export default class Home extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.resetForm = this.resetForm.bind(this);
 		this.state = {
-			products:[],
+			products: [],
 			name: "",
 			telephone: "",
 			email: "",
@@ -30,13 +29,16 @@ export default class Home extends Component {
 	}
 
 	render() {
-		let i=0;
+		let i = 0;
 		const { name } = this.state;
 		const _p = this.state.products;
-		const {isSendMessage}= this.state;
+		const { isSendMessage } = this.state;
 		var alert = null;
-    	if (isSendMessage){ alert=(<Message message="Su consulta ya fué almacenada."/>);
-		}else{ alert=null;}
+		if (isSendMessage) {
+			alert = <Message message="Su consulta ya fué almacenada." />;
+		} else {
+			alert = null;
+		}
 		return (
 			<>
 				<Header
@@ -49,21 +51,18 @@ export default class Home extends Component {
 				<Subtitle class="text-center" text="Armá tu presupuesto" />
 
 				<div className="grid grid-cols-4 xs:grid-cols-2 sm:grid-cols-2 mx-auto gap-3 mt-5 w-4/5">
-					{	
-						_p.slice(1,5).map((p) => (
-            				<CardProduct key={p.id} id={p.id} name={p.name} price={p.price} image={p.image}/>
-								
-						))
-					}
+					{_p.slice(1, 5).map((p) => (
+						<CardProduct key={p.id} id={p.id} name={p.name} price={p.price} image={p.image} />
+					))}
 					<Link
-						to="/productos"
+						to="/MundoPc/productos"
 						className="col-span-4 xs:col-span-2 sm:col-span-2 mx-auto mt-5 py-2 px-10 bg-rojo hover:bg-red-500 text-blanco font-bold text-center border border-rojo rounded-lg">
 						Ver más productos
 					</Link>
 				</div>
 
 				<section className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 mr-20 xs:mx-auto sm:mx-0">
-				{alert}
+					{alert}
 					<div className="grid xs:grid-cols-2 sm:grid-cols-2 grid-cols-4 col-span-1 pt-20 pl-16 xs:px-5 sm:px-0 sm:mx-2">
 						<MainTitle class="col-span-4" text="Contactanos." />
 						<Subtitle
@@ -138,10 +137,10 @@ export default class Home extends Component {
 	}
 
 	componentDidMount() {
-		ProductService.getAll().then(res=>{
-			this.setState({products: res.data});
-		}).catch=(e)=>{
-			console.log(`Ocurrió algo cargando productos, aquí algunas pistas: ${e}`)
+		ProductService.getAll().then((res) => {
+			this.setState({ products: res.data });
+		}).catch = (e) => {
+			console.log(`Ocurrió algo cargando productos, aquí algunas pistas: ${e}`);
 		};
 		//no se usa para naa
 		const _u = JSON.parse(localStorage.getItem("user"));
@@ -158,7 +157,7 @@ export default class Home extends Component {
 			name: "",
 			telephone: "",
 			email: "",
-			message: ""
+			message: "",
 		});
 	}
 
@@ -172,19 +171,17 @@ export default class Home extends Component {
 			email: this.state.email,
 			query: this.state.message,
 		};
-		MessengerService.create(user).then(res=>{
-			this.setState({isSendMessage: true});
+		MessengerService.create(user).then((res) => {
+			this.setState({ isSendMessage: true });
 
-			const _message="Gracias por su consulta! le contestaremos lo antes posible";//espere sentado	
+			const _message = "Gracias por su consulta! le contestaremos lo antes posible"; //espere sentado
 			MessengerService.sendFeedback({
 				to_name: this.state.name,
-				message: _message, 
-				from_name: this.state.name, 
-				to_email: this.state.email
-			})
+				message: _message,
+				from_name: this.state.name,
+				to_email: this.state.email,
+			});
 			this.resetForm();
 		});
 	}
-
-	
 }

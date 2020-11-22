@@ -12,7 +12,7 @@ function Footer() {
 	return (
 		<nav className="bg-negro grid sm:grid-cols-1 xs:grid-cols-2 grid-cols-3 mt-2">
 			<div className="m-10 sm:mx-auto sm:col-span-2">
-				<NavLink to="/">
+				<NavLink to="/MundoPc">
 					<img src={Logo} alt="Logo MundoPc" />
 				</NavLink>
 			</div>

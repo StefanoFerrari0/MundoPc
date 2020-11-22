@@ -27,24 +27,24 @@ function App() {
 			<Navbar />
 			<hr />
 			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/productos" component={Productos} />
-				<Route exact path="/servicio-tecnico" component={ServicioTecnico} />
-				<Route exact path="/servicio-tecnico/:code" component={ConsultaST} />
+				<Route exact path="/MundoPc" component={Home} />
+				<Route exact path="/MundoPc/productos" component={Productos} />
+				<Route exact path="/MundoPc/servicio-tecnico" component={ServicioTecnico} />
+				<Route exact path="/MundoPc/servicio-tecnico/:code" component={ConsultaST} />
 
-				<Route exact path="/producto/:id" component={ProductoId} />
-				<Route exact path="/carrito" component={Carrito} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/registro" component={Registro} />
-				<Route exact path="/recuperar-cuenta" component={RecuperarCuenta} />
+				<Route exact path="/MundoPc/producto/:id" component={ProductoId} />
+				<Route exact path="/MundoPc/carrito" component={Carrito} />
+				<Route exact path="/MundoPc/login" component={Login} />
+				<Route exact path="/MundoPc/registro" component={Registro} />
+				<Route exact path="/MundoPc/recuperar-cuenta" component={RecuperarCuenta} />
 
-				<PrivateRoute exact path="/admin/homeadmin" component={HomeAdmin} />
-				<PrivateRoute exact path="/admin/products" component={Products} />				
-				<PrivateRoute exact path="/admin/newproduct" component={NewProduct} />
-				<PrivateRoute exact path="/admin/editproduct/:id" component={NewProduct} />
-				<PrivateRoute exact path="/admin/reports" component={Reports} />
-				<PrivateRoute exact path="/admin/editreport/:id" component={EditReport} />
-				<PrivateRoute exact path="/admin/newreport" component={NewReport} />
+				<PrivateRoute exact path="/MundoPc/admin/homeadmin" component={HomeAdmin} />
+				<PrivateRoute exact path="/MundoPc/admin/products" component={Products} />
+				<PrivateRoute exact path="/MundoPc/admin/newproduct" component={NewProduct} />
+				<PrivateRoute exact path="/MundoPc/admin/editproduct/:id" component={NewProduct} />
+				<PrivateRoute exact path="/MundoPc/admin/reports" component={Reports} />
+				<PrivateRoute exact path="/MundoPc/admin/editreport/:id" component={EditReport} />
+				<PrivateRoute exact path="/MundoPc/admin/newreport" component={NewReport} />
 
 				<Route component={Error} />
 			</Switch>

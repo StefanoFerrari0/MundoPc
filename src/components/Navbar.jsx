@@ -10,18 +10,16 @@ const Navbar = ({}) => {
 
 	useEffect(() => {
 		var user = JSON.parse(localStorage.getItem("user"));
-		if (user!==null)
-		{
+		if (user !== null) {
 			loggedFunction(true);
-		}
-		else{
+		} else {
 			loggedFunction(false);
 		}
 	});
 
 	return (
 		<nav className="flex items-center justify-between flex-wrap bg-negro p-6 font-robotoC">
-			<NavLink to="/" className="">
+			<NavLink to="/MundoPc" className="">
 				<img src={Logo} className="w-48 sm:40" alt="Logo MundoPc" />
 			</NavLink>
 			<div className="block lg:hidden md:hidden xl:hidden">
@@ -40,13 +38,13 @@ const Navbar = ({}) => {
 				}  xs:ml-0 sm:ml-0 ml-20 md:ml-0 xs:ml-0  w-full block flex-grow lg:flex lg:items-center lg:w-auto md:flex md:items-center md:w-auto xl:flex xl:items-center xl:w-auto`}>
 				<div className="uppercase font-bold text-lg ml-12 lg:flex-grow md:flex-grow xl:flex-grow">
 					<NavLink
-						to="/productos"
+						to="/MundoPc/productos"
 						className="block mt-4 lg:inline-block md:inline-block xl:inline-block
                         lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo mr-20 md:mr-10">
 						Productos
 					</NavLink>
 					<NavLink
-						to="/servicio-tecnico"
+						to="/MundoPc/servicio-tecnico"
 						className="block mt-4 lg:inline-block md:inline-block xl:inline-block
                         lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo mr-20 md:mr-10">
 						Servicio técnico
@@ -54,7 +52,7 @@ const Navbar = ({}) => {
 				</div>
 				<div className="uppercase font-bold text-lg xs:ml-12 sm:ml-12">
 					<NavLink
-						to="/carrito"
+						to="/MundoPc/carrito"
 						className="block mr-20 mt-4 md:mr-10 lg:inline-block md:inline-block xl:inline-block
                         lg:mt-0 md:mt-0 xl:mt-0 text-blanco hover:text-rojo">
 						<FiShoppingCart size={30} />
@@ -62,7 +60,7 @@ const Navbar = ({}) => {
 				</div>
 				<div className="uppercase font-bold text-lg xs:ml-12 sm:ml-12">
 					<NavLink
-						to={!isLogged ? "/login" : "/"}
+						to={!isLogged ? "/MundoPc/login" : "/MundoPc"}
 						onClick={!isLogged ? null : logout}
 						className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:rojo hover:bg-rojo mt-4 lg:mt-0 md:mt-0 xl:mt-0">
 						{!isLogged ? "Login" : "Logout"}

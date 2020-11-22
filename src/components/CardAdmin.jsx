@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function CardAdmin(props) {
 	return (
-		<Link to={`/admin/${props.link}`}>
+		<Link to={`/MundoPc/admin/${props.link}`}>
 			<div className="p-2 sm:p-10 text-center cursor-pointer text-white">
 				<div className="py-16 max-w-sm rounded overflow-hidden shadow-lg bg-rojo hover:bg-green-600 transition duration-500">
 					{props.icon}
@@ -17,4 +17,3 @@ function CardAdmin(props) {
 }
 
 export default CardAdmin;
-
