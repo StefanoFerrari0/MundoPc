@@ -1,4 +1,9 @@
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true
+
+  },
   theme: {
     screens: {
       'xs': {'min': '320px', 'max': '480px'},
